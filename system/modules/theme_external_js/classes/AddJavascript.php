@@ -34,15 +34,15 @@ class AddJavascript extends \Controller
 			$this->import('FilesModel'); 
 			$files = $this->FilesModel->findMultipleByIds($arrJavascriptFiles);
 			
-			if($files->count()){
-				$arrPaths = $files->fetchEach('path');
-				$this->import('Combiner');
-				foreach($arrPaths as $fileId => $filePath)
-				{
-					$this->Combiner->add($filePath);
+			if(is_object($files) && $files->count()){
+ 				$arrPaths = $files->fetchEach('path');
+ 				$this->import('Combiner');
+ 				foreach($arrPaths as $fileId => $filePath)
+ 				{
+ 					$this->Combiner->add($filePath);
 				}
-				$GLOBALS['TL_JQUERY'][] = '<script src="'.$this->Combiner->getCombinedFile().'"></script>';
-			}
+ 				$GLOBALS['TL_JQUERY'][] = '<script src="'.$this->Combiner->getCombinedFile().'"></script>';
+ 			}
 		}
 	}
 }
