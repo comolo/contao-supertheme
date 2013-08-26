@@ -98,14 +98,37 @@ class AddAssets extends \Controller
 			# Add Sass
 			$scss = new \scssc();
 			$scss->setImportPaths(dirname($strPathSCSS).'/');
+			$scss->setFormatter('scss_formatter_compressed');
+			
+			# Add custom function
+			$scss->registerFunction("contao", function($args) use($scss) {
+			  switch($args[0]){
+				  case 'base': return \Environment::get('base');
+				  case 'files': return '/'.$GLOBALS['TL_CONFIG']['uploadPath'].'/';
+				  case 'debug': $scss->setFormatter('scss_formatter_nested'); return;
+			  }
+			});
 			
 			# Add Compass
 			new \scss_compass($scss);
 			
 			#$objCssFile->write($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
-			file_put_contents(TL_ROOT.'/'.$strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
+			
+			$strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS));
+			$strCssContent = $this->modifyCss($strCssContent);
+			
+			# write css file
+			file_put_contents(TL_ROOT.'/'.$strCSSFile, $strCssContent);
 		}
 		
 		return $strCSSFile;
+	}
+	
+	protected function modifyCss($strCss)
+	{
+		// Remove css comments
+		$strCss = preg_replace( '/\s*(?!<\")\/\*[^\*]+\*\/(?!\")\s*/' , '' , $strCss);
+		
+		return  $strCss;
 	}
 }
