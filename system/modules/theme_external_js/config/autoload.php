@@ -25,6 +25,10 @@ ClassLoader::addNamespaces(array
  */
 ClassLoader::addClasses(array
 (
+	// Vendor
+	'scss'                       => 'system/modules/theme_external_js/vendor/leafo/scssphp/scss.inc.php',
+	'scss_compass'               => 'system/modules/theme_external_js/vendor/leafo/scssphp-compass/compass.inc.php',
+
 	// Classes
 	'ThemeExternalJS\AddJavascript' => 'system/modules/theme_external_js/classes/AddJavascript.php',
 ));

@@ -1,0 +1,6 @@
+{
+	"require": {
+		"leafo/scssphp": "dev-master",
+		"leafo/scssphp-compass": "dev-master"
+	}
+}
