@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_layout']['fields']['external_js'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['external_js'],
 	'exclude'                 => true,
 	'inputType'               => 'fileTree',
-	'eval'                    => array('multiple'=>true, 'fieldType'=>'checkbox', 'filesOnly'=>true, 'extensions'=>'js'),
+	'eval'                    => array('multiple'=>true, 'fieldType'=>'checkbox', 'filesOnly'=>true, 'extensions'=>'js,coffee'),
 	'sql'                     => "blob NULL"
 );
 

@@ -3,8 +3,52 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8bf5739c5e83f890e71c8e85cf4369e4",
+    "hash": "de6fd8084544f8540870e1f586430a9f",
     "packages": [
+        {
+            "name": "coffeescript/coffeescript",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alxlit/coffeescript-php.git",
+                "reference": "30c22332f0514f466638eb71e3219526790c1b93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alxlit/coffeescript-php/zipball/30c22332f0514f466638eb71e3219526790c1b93",
+                "reference": "30c22332f0514f466638eb71e3219526790c1b93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "CoffeeScript": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Little",
+                    "email": "alxlit@gmail.com",
+                    "homepage": "http://alxlit.name"
+                }
+            ],
+            "description": "A port of the CoffeeScript compiler to PHP.",
+            "homepage": "http://github.com/alxlit/coffeescript-php",
+            "keywords": [
+                "JS",
+                "coffee",
+                "coffeescript",
+                "javascript"
+            ],
+            "time": "2012-12-18 03:52:51"
+        },
         {
             "name": "leafo/scssphp",
             "version": "dev-master",
@@ -96,7 +140,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "leafo/scssphp": 20,
-        "leafo/scssphp-compass": 20
+        "leafo/scssphp-compass": 20,
+        "coffeescript/coffeescript": 20
     },
     "platform": [
 

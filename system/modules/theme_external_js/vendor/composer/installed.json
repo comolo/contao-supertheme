@@ -83,5 +83,51 @@
         ],
         "description": "Compass for scssphp",
         "homepage": "http://leafo.net/scssphp/"
+    },
+    {
+        "name": "coffeescript/coffeescript",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/alxlit/coffeescript-php.git",
+            "reference": "30c22332f0514f466638eb71e3219526790c1b93"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/alxlit/coffeescript-php/zipball/30c22332f0514f466638eb71e3219526790c1b93",
+            "reference": "30c22332f0514f466638eb71e3219526790c1b93",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2012-12-18 03:52:51",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "CoffeeScript": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alex Little",
+                "email": "alxlit@gmail.com",
+                "homepage": "http://alxlit.name"
+            }
+        ],
+        "description": "A port of the CoffeeScript compiler to PHP.",
+        "homepage": "http://github.com/alxlit/coffeescript-php",
+        "keywords": [
+            "JS",
+            "coffee",
+            "coffeescript",
+            "javascript"
+        ]
     }
 ]

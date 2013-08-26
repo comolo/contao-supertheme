@@ -42,6 +42,9 @@ class AddAssets extends \Controller
  				$combiner = new \Combiner();
  				foreach(array_unique($arrPaths) as $fileId => $filePath)
  				{
+					if(substr($filePath, -7) == '.coffee')){
+						$filePath = $this->compileCoffeescript($filePath);
+					}
  					$combiner->add($filePath);
 				}
  				$GLOBALS['TL_JQUERY'][] = '<script src="'.$combiner->getCombinedFile().'"></script>';
@@ -56,6 +59,27 @@ class AddAssets extends \Controller
 		foreach($arr2 as $key => $value) $array[] = $value;
 		
 		return $array;
+	}
+	
+	protected function compileCoffeescript($strCoffeescriptPath)
+	{
+		$debug = false;
+		$strJSFile = 'assets/js/coffee-'.md5_file($strPathSCSS).'.js';
+		
+		if(!file_exists(TL_ROOT.'/'.$strJSFile) || $debug) {
+			
+			// require classes
+			require_once __DIR__.'/../vendor/CoffeeScript/Init.php';
+			CoffeeScript\Init::load();
+		
+			$strCoffee = file_get_contents($strCoffeescriptPath);
+			$strJs = CoffeeScript\Compiler::compile($strCoffee, array('filename' => $strCoffeescriptPath));
+			
+			# write css file
+			file_put_contents(TL_ROOT.'/'.$strJSFile, $strJs);
+		}
+		
+		return $strJSFile;
 	}
 	
 	
