@@ -84,12 +84,11 @@ class AddAssets extends \Controller
 	
 	protected function compileSCSS($strPathSCSS)
 	{
-		$strCSSFile = TL_ROOT.'/assets/css/scss-'.md5_file($strPathSCSS).'.css';
+		$strCSSFile = 'assets/css/scss-'.md5_file($strPathSCSS).'.css';
 		#$objCssFile = new \File($strCSSFile);
 		
 		#if($objCssFile->exists()){
-		if(!file_exists($strCSSFile)) {
-			echo "hier";
+		if(!file_exists(TL_ROOT.'/'.$strCSSFile)) {
 			
 			// require classes
 			require_once __DIR__.'/../vendor/leafo/scssphp/scss.inc.php';
@@ -98,9 +97,9 @@ class AddAssets extends \Controller
 			$scss = new \scssc();
 			new \scss_compass($scss);
 			#$objCssFile->write($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
-			file_put_contents($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
+			file_put_contents(TL_ROOT.'/'.$strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
 		}
 		
-		return str_replace(TL_ROOT.'/', '', $strCSSFile);
+		return $strCSSFile;
 	}
 }
