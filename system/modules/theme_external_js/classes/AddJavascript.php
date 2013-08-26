@@ -28,7 +28,7 @@ class AddJavascript extends \Controller
 {
 	public function addJsToPage(\PageModel $page, \LayoutModel $layout, \PageRegular $pageRegular)
 	{
-		$arrJavascriptFiles = unserialize($layout->external_js);
+		$arrJavascriptFiles = $this->combineArrayValues((array)unserialize($layout->external_js), (array)unserialize($page->external_js));
 		
 		if(count($arrJavascriptFiles)>0){
 			$this->import('FilesModel'); 
@@ -37,12 +37,21 @@ class AddJavascript extends \Controller
 			if(is_object($files) && $files->count()){
  				$arrPaths = $files->fetchEach('path');
  				$this->import('Combiner');
- 				foreach($arrPaths as $fileId => $filePath)
+ 				foreach(array_unique($arrPaths) as $fileId => $filePath)
  				{
  					$this->Combiner->add($filePath);
 				}
  				$GLOBALS['TL_JQUERY'][] = '<script src="'.$this->Combiner->getCombinedFile().'"></script>';
  			}
 		}
+	}
+	
+	protected function combineArrayValues($arr1, $arr2)
+	{
+		$array = array();
+		foreach($arr1 as $key => $value) $array[] = $value;
+		foreach($arr2 as $key => $value) $array[] = $value;
+		
+		return $array;
 	}
 }
