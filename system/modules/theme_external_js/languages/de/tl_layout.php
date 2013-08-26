@@ -11,8 +11,6 @@
  */
 
 
+$GLOBALS['TL_LANG']['tl_layout']['external_js']    = array('Zusätzliche Javascript-Dateien', 'Hier k&ouml;nnen Sie zusätzliche Javascript-Dateien aus dem Dateisystem hinzuf&uuml;gen.');
 
-/**
- * Buttons
- */
-$GLOBALS['TL_LANG']['tl_layout']['external_js']    = array('Zusätzliche Javascript-Dateien', 'Hier können Sie zusätzliche Javascript-Dateien aus dem Dateisystem hinzuf&uuml;gen.');
+$GLOBALS['TL_LANG']['tl_layout']['external_scss']    = array('SCSS-Dateien', 'Hier k&ouml;nnen Sie SCSS-Dateien aus dem Dateisystem hinzuf&uuml;gen, die von Contao automatisch compiliert werden.');

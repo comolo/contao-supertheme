@@ -30,5 +30,5 @@ ClassLoader::addClasses(array
 	'scss_compass'               => 'system/modules/theme_external_js/vendor/leafo/scssphp-compass/compass.inc.php',
 
 	// Classes
-	'ThemeExternalJS\AddJavascript' => 'system/modules/theme_external_js/classes/AddJavascript.php',
+	'ThemeExternalJS\AddAssets' => 'system/modules/theme_external_js/classes/AddAssets.php',
 ));
