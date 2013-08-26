@@ -84,18 +84,24 @@ class AddAssets extends \Controller
 	
 	protected function compileSCSS($strPathSCSS)
 	{
+		$debug = false;
 		$strCSSFile = 'assets/css/scss-'.md5_file($strPathSCSS).'.css';
 		#$objCssFile = new \File($strCSSFile);
 		
 		#if($objCssFile->exists()){
-		if(!file_exists(TL_ROOT.'/'.$strCSSFile)) {
+		if(!file_exists(TL_ROOT.'/'.$strCSSFile) || $debug) {
 			
 			// require classes
 			require_once __DIR__.'/../vendor/leafo/scssphp/scss.inc.php';
 			require_once __DIR__.'/../vendor/leafo/scssphp-compass/compass.inc.php';
 			
+			# Add Sass
 			$scss = new \scssc();
+			$scss->setImportPaths(dirname($strPathSCSS).'/');
+			
+			# Add Compass
 			new \scss_compass($scss);
+			
 			#$objCssFile->write($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
 			file_put_contents(TL_ROOT.'/'.$strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
 		}
