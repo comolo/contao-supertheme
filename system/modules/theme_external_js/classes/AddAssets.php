@@ -39,12 +39,12 @@ class AddAssets extends \Controller
 			
 			if(is_object($files) && $files->count()){
  				$arrPaths = $files->fetchEach('path');
- 				$this->import('Combiner');
+ 				$combiner = new \Combiner();
  				foreach(array_unique($arrPaths) as $fileId => $filePath)
  				{
- 					$this->Combiner->add($filePath);
+ 					$combiner->add($filePath);
 				}
- 				$GLOBALS['TL_JQUERY'][] = '<script src="'.$this->Combiner->getCombinedFile().'"></script>';
+ 				$GLOBALS['TL_JQUERY'][] = '<script src="'.$combiner->getCombinedFile().'"></script>';
  			}
 		}
 	}
@@ -69,29 +69,38 @@ class AddAssets extends \Controller
 			
 			if(is_object($files) && $files->count()){
  				$arrPaths = $files->fetchEach('path');
- 				$this->import('Combiner');
+ 				$combiner = new \Combiner();
  				foreach(array_unique($arrPaths) as $fileId => $filePath)
  				{
-					$this->Combiner->add(
+					$combiner->add(
 						$this->compileSCSS($filePath)
-					);
+							)
+								;
 				}
- 				$GLOBALS['TL_CSS'][] = $this->Combiner->getCombinedFile();
+ 				$GLOBALS['TL_CSS'][] = $combiner->getCombinedFile();
  			}
 		}
 	}
 	
 	protected function compileSCSS($strPathSCSS)
 	{
-		$strCSSFile = TL_ROOT.'assets/css/scss-'.md5_file($strPathSCSS).'.css';
+		$strCSSFile = TL_ROOT.'/assets/css/scss-'.md5_file($strPathSCSS).'.css';
+		#$objCssFile = new \File($strCSSFile);
 		
-		if(!file_exists($strCSSFile)){
-			$this->import('Files');
-			$scss = new scssc();
-			new scss_compass($scss);
-			$this->Files->fputs($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.$strPathSCSS)));
+		#if($objCssFile->exists()){
+		if(!file_exists($strCSSFile)) {
+			echo "hier";
+			
+			// require classes
+			require_once __DIR__.'/../vendor/leafo/scssphp/scss.inc.php';
+			require_once __DIR__.'/../vendor/leafo/scssphp-compass/compass.inc.php';
+			
+			$scss = new \scssc();
+			new \scss_compass($scss);
+			#$objCssFile->write($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
+			file_put_contents($strCSSFile, $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS)));
 		}
 		
-		return $strCSSFile;
+		return str_replace(TL_ROOT.'/', '', $strCSSFile);
 	}
 }
