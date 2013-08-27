@@ -1,6 +1,4 @@
-/*.scss
-/*.css
+/site
+/tests
 /*.php
 .sass-cache
-/sass/
-/compass/
