@@ -101,7 +101,7 @@ class AddAssets extends \Controller
 							)
 								;
 				}
- 				$GLOBALS['TL_CSS'][] = $combiner->getCombinedFile();
+ 				$GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="'.$combiner->getCombinedFile().'">';
  			}
 		}
 	}
