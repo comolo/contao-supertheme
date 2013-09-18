@@ -57,6 +57,7 @@ class GenerateScss extends AssetGenerator
 			
 			# write css file
 			file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
+			$this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
 		}
 		
 		return $strCssFilePath;

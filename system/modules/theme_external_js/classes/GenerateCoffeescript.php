@@ -56,6 +56,7 @@ class GenerateCoffeescript extends AssetGenerator
 			
 			# write css file / replace with contao framework method later
 			file_put_contents(TL_ROOT.'/'.$strJSFile, $strJs);
+			$this->compressAsset(TL_ROOT.'/'.$strJSFile);
 		}
 		
 		return $strJSFile;
