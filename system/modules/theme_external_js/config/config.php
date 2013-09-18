@@ -11,5 +11,5 @@
  * @copyright Hendrik Obermayer - Comolo 
  */
 
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('AddAssets', 'addJavascriptToPage');
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('AddAssets', 'addSCSSToPage');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('GenerateScss', 'generate');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('GenerateCoffeescript', 'generate');

@@ -26,5 +26,7 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
 	// Classes
-	'ThemeExternalJS\AddAssets' => 'system/modules/theme_external_js/classes/AddAssets.php',
+	'ThemeExternalJS\AssetGenerator' => 'system/modules/theme_external_js/classes/AssetGenerator.php',
+	'ThemeExternalJS\GenerateScss' => 'system/modules/theme_external_js/classes/GenerateScss.php',
+	'ThemeExternalJS\GenerateCoffeescript' => 'system/modules/theme_external_js/classes/GenerateCoffeescript.php',
 ));

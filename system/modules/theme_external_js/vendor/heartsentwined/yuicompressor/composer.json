@@ -1,0 +1,6 @@
+{
+    "name": "heartsentwined/yuicompressor",
+    "description": "YUI Compressor is a popular CSS and JS minifier.",
+    "keywords": ["yui", "minifier", "compressor", "js", "css"],
+    "homepage": "https://github.com/heartsentwined/yuicompressor"
+}

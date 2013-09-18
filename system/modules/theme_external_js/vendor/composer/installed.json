@@ -129,5 +129,34 @@
             "coffeescript",
             "javascript"
         ]
+    },
+    {
+        "name": "heartsentwined/yuicompressor",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/heartsentwined/yuicompressor.git",
+            "reference": "aec146f30b2a732850645da6516a2c3a1015b577"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/heartsentwined/yuicompressor/zipball/aec146f30b2a732850645da6516a2c3a1015b577",
+            "reference": "aec146f30b2a732850645da6516a2c3a1015b577",
+            "shasum": ""
+        },
+        "time": "2012-09-02 18:05:33",
+        "type": "library",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "description": "YUI Compressor is a popular CSS and JS minifier.",
+        "homepage": "https://github.com/heartsentwined/yuicompressor",
+        "keywords": [
+            "JS",
+            "compressor",
+            "css",
+            "minifier",
+            "yui"
+        ]
     }
 ]
