@@ -44,7 +44,7 @@ class GenerateCoffeescript extends AssetGenerator
 		// Target File
 		$strJSFile = 'assets/js/coffee-'.md5_file($strSourcePath).'.js';
 		
-		if(!file_exists(TL_ROOT.'/'.$strJSFile) || true) {
+		if(!file_exists(TL_ROOT.'/'.$strJSFile)) {
 			
 			// require classes
 			require_once __DIR__.'/../vendor/coffeescript/coffeescript/src/CoffeeScript/Init.php';
