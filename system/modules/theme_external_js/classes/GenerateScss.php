@@ -52,8 +52,7 @@ class GenerateScss extends AssetGenerator
 			# Add Compass
 			new \scss_compass($scss);
 			
-			$strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strPathSCSS));
-			$strCssContent = $this->modifyCss($strCssContent);
+			$strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
 			
 			# write css file
 			file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
@@ -68,17 +67,11 @@ class GenerateScss extends AssetGenerator
 		$GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="'.$filePath.'">';
 	}
 	
-	protected customScssFunctions($scss) {
+	protected function customScssFunctions($scss) {
 		# $scss->registerFunction("contao", function($args) use($scss) {
 			# do something 
 		# });
 		
 		return $scss;
-	}
-	
-	protected function modifyCss($strCssContent)
-	{
-		// Remove css comments
-		return preg_replace( '/\s*(?!<\")\/\*[^\*]+\*\/(?!\")\s*/' , '' , $strCssContents);
 	}
 }

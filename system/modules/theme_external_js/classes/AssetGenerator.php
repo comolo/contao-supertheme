@@ -29,6 +29,7 @@ abstract class AssetGenerator extends \Controller
 	protected $pageModel;
 	protected $layoutModel;
 	protected $pageRegular;
+	protected $yui_path = false;
 	
 	public function __construct()
 	{
@@ -69,15 +70,21 @@ abstract class AssetGenerator extends \Controller
 	
 	protected function compressAsset($filePath)
 	{
-		$yuiPath = __DIR__.'/../vendor/heartsentwined/yuicompressor/yuicompressor.jar';
-		$options = array(
-			$filePath,
-			'-o '.$filePath,
-			'--charset utf-8',
-		);
-		$cmd = $yuiPath.' '.implode(' ', $options);
+		// Get Yiu Path
+		$yuiPath = $this->yui_path ? $this->yui_path : trim(`which yui-compressor`);
+		if(empty($yuiPath) || !$yuiPath) return false;
 		
-		return `$cmd`;
+		$options = array(
+			escapeshellarg($filePath),
+			'-o '.escapeshellarg($filePath),
+			'--charset "utf-8"',
+			'-v'
+		);
+		
+		$cmd = $yuiPath.' '.implode(' ', $options);
+		echo `$cmd`;
+		
+		return true;
 	}
 	
 	// helper function
