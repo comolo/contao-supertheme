@@ -17,6 +17,7 @@
 ClassLoader::addNamespaces(array
 (
 	'ThemeExternalJS',
+	''
 ));
 
 
@@ -29,4 +30,6 @@ ClassLoader::addClasses(array
 	'ThemeExternalJS\AssetGenerator' => 'system/modules/theme_external_js/classes/AssetGenerator.php',
 	'ThemeExternalJS\GenerateScss' => 'system/modules/theme_external_js/classes/GenerateScss.php',
 	'ThemeExternalJS\GenerateCoffeescript' => 'system/modules/theme_external_js/classes/GenerateCoffeescript.php',
+	'scssc' => 'system/modules/theme_external_js/vendor/leafo/scssphp/scss.inc.php',
+	'scss_compass' => 'system/modules/theme_external_js/vendor/leafo/scssphp-compass/compass.inc.php',
 ));

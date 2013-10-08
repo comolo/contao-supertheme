@@ -18,7 +18,7 @@
 namespace ThemeExternalJS;
 
 /**
- * Class AddJavascript 
+ * Class GenerateCoffeescript 
  *
  * @copyright  Hendrik Obermayer - Comolo 
  * @author     Hendrik Obermayer - Comolo 

@@ -17,8 +17,10 @@
  */
 namespace ThemeExternalJS;
 
+use \ThemeExternalJS\scssc;
+
 /**
- * Class AddJavascript 
+ * Class GenerateScss 
  *
  * @copyright  Hendrik Obermayer - Comolo 
  * @author     Hendrik Obermayer - Comolo 
@@ -33,16 +35,15 @@ class GenerateScss extends AssetGenerator
 	
 	protected function assetCompiler($strSourcePath)
 	{
-		$strCssFilePath = 'assets/css/scss-'.md5_file($strSourcePath).'.css';
+		$strCssFilePath = 'assets/css/'.md5($strSourcePath.md5_file($strSourcePath)).'.css';
 		
-		if(!file_exists(TL_ROOT.'/'.$strCssFilePath)) {
-			
-			// require classes
-			require_once __DIR__.'/../vendor/leafo/scssphp/scss.inc.php';
-			require_once __DIR__.'/../vendor/leafo/scssphp-compass/compass.inc.php';
+		if(
+			$this->checkCached($strSourcePath, $strCssFilePath) == false
+			|| file_exists(TL_ROOT.'/'.$strCssFilePath) == false
+		) {
 			
 			# Add Sass
-			$scss = new \scssc();
+			$scss = new scssc();
 			$scss->setImportPaths(dirname($strSourcePath).'/');
 			$scss->setFormatter('scss_formatter_compressed');
 			
@@ -57,6 +58,9 @@ class GenerateScss extends AssetGenerator
 			# write css file
 			file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
 			$this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
+			
+			# cache
+			$this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
 		}
 		
 		return $strCssFilePath;
@@ -73,5 +77,80 @@ class GenerateScss extends AssetGenerator
 		# });
 		
 		return $scss;
+	}
+	/**
+	 * cache methods:
+	 */ 
+	public function checkCached($strSourcePath, $strNewPath)
+	{
+		$cacheFile = $strNewPath.'.cache';
+		
+		if(file_exists(TL_ROOT.'/'.$cacheFile)) 
+		{
+			$strHash = '';
+			$strCacheContents = file_get_contents(TL_ROOT.'/'.$cacheFile);
+			list($arrImportedFiles, $strCachedHash) = explode('*', $strCacheContents);
+
+			foreach($arrImportedFiles = explode('|', $arrImportedFiles) as $k => $strImportedFilePath)
+			{
+				$strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
+			}
+			$strHash = md5($strHash);
+			
+			if($strHash == $strCachedHash){
+				//files are the same
+				return true;
+			}
+			// files changed
+			return false;
+		}
+		// no cache file found
+		return false;
+	}
+	
+	public function generateCache($strSourcePath, $strNewPath, $arrImportedStylesheets)
+	{
+		$cacheFile = $strNewPath.'.cache';
+		$strHash = '';
+		
+		foreach($arrImportedStylesheets as $k => $strStylesheetPath)
+		{
+			// remove e.g. compass stylesheets
+			if(strpos($strStylesheetPath, 'system/modules/') !== false){
+				unset($arrImportedStylesheets[$k]);
+			}
+			else {
+				$strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
+			}
+		}
+		$strHash = md5($strHash);
+		$strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
+		file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
+	}
+}
+
+/**
+ * Class scssc 
+ *
+ * @copyright  Hendrik Obermayer - Comolo 
+ * @author     Hendrik Obermayer - Comolo 
+ * @package    Devtools
+ */
+class scssc extends \scssc
+{
+	protected $importedStylesheets = array();
+	
+	// overwrite method to get the impoted files
+	protected function importFile($path, $out) 
+	{
+		$this->importedStylesheets[] = $path;
+		
+		// call "original" method
+		return parent::importFile($path, $out);
+	}
+	
+	public function getImportedStylesheets()
+	{
+		return $this->importedStylesheets;
 	}
 }

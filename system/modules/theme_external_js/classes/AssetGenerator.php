@@ -18,7 +18,7 @@
 namespace ThemeExternalJS;
 
 /**
- * Class AddJavascript 
+ * Class AssetGenerator 
  *
  * @copyright  Hendrik Obermayer - Comolo 
  * @author     Hendrik Obermayer - Comolo 
@@ -30,6 +30,7 @@ abstract class AssetGenerator extends \Controller
 	protected $layoutModel;
 	protected $pageRegular;
 	protected $yui_path = false;
+	protected $yuiCompressor = false;
 	
 	public function __construct()
 	{
@@ -70,6 +71,9 @@ abstract class AssetGenerator extends \Controller
 	
 	protected function compressAsset($filePath)
 	{
+		// check if enabled
+		if($this->yuiCompressor == false) return;
+		
 		// Get Yiu Path
 		$yuiPath = $this->yui_path ? $this->yui_path : trim(`which yui-compressor`);
 		if(empty($yuiPath) || !$yuiPath) return false;
