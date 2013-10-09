@@ -45,11 +45,11 @@ abstract class AssetGenerator extends \Controller
 
 		// 
 		$arrFileIds = $this->filesCollector();
-			
+
 		if(count($arrFileIds)>0)
 		{
 			// fetch file path
-			$arrFiles = $this->FilesModel->findMultipleByIds($arrFileIds);
+			$arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
 			
 			if(is_object($arrFiles) && $arrFiles->count()>0)
 			{

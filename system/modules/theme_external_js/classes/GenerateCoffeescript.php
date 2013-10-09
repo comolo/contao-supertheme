@@ -71,6 +71,6 @@ class GenerateCoffeescript extends AssetGenerator
 	
 	protected function addAssetToPage($filePath)
 	{
-		$GLOBALS['TL_JQUERY'][] = '<script src="'.$filePath.'"></script>';
+		$GLOBALS['TL_BODY'][] = '<script src="'.$filePath.'"></script>';
 	}
 }
