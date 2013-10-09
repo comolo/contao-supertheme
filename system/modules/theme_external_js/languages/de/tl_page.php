@@ -15,4 +15,4 @@
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_page']['external_js']    = array('Zusätzliche Javascript-Dateien', 'Hier können Sie zusätzliche Javascript-Dateien aus dem Dateisystem hinzuf&uuml;gen.');
+$GLOBALS['TL_LANG']['tl_page']['external_js']    = array('Zusätzliche Coffee- und Javascript-Dateien', 'Hier können Sie zusätzliche Coffee- und Javascript-Dateien aus dem Dateisystem hinzuf&uuml;gen.');
