@@ -24,13 +24,19 @@ $GLOBALS['TL_DCA']['tl_layout']['palettes']['default'] = str_replace(
 );
 
 
-# fields
+/* Fields */
 $GLOBALS['TL_DCA']['tl_layout']['fields']['external_js'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['external_js'],
 	'exclude'                 => true,
 	'inputType'               => 'fileTree',
-	'eval'                    => array('multiple'=>true, 'fieldType'=>'checkbox', 'filesOnly'=>true, 'extensions'=>'js,coffee'),
+	'eval'                    => array(
+									'multiple'=>true, 
+									'orderField'=>'external_js_order', 
+									'fieldType'=>'checkbox', 
+									'filesOnly'=>true, 
+									'extensions'=>'js,coffee'
+								),
 	'sql'                     => "blob NULL"
 );
 
@@ -39,6 +45,26 @@ $GLOBALS['TL_DCA']['tl_layout']['fields']['external_scss'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['external_scss'],
 	'exclude'                 => true,
 	'inputType'               => 'fileTree',
-	'eval'                    => array('multiple'=>true, 'fieldType'=>'checkbox', 'filesOnly'=>true, 'extensions'=>'scss'),
+	'eval'                    => array(
+									'multiple'=>true, 
+									'orderField'=>'external_scss_order', 
+									'fieldType'=>'checkbox', 
+									'filesOnly'=>true, 
+									'extensions'=>'scss'
+								),
 	'sql'                     => "blob NULL"
+);
+
+
+/* Order */
+$GLOBALS['TL_DCA']['tl_layout']['fields']['external_js_order'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['orderExt'],
+	'sql'                     => "text NULL"
+);
+
+$GLOBALS['TL_DCA']['tl_layout']['fields']['external_scss_order'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['orderExt'],
+	'sql'                     => "text NULL"
 );

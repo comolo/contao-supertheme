@@ -100,4 +100,40 @@ abstract class AssetGenerator extends \Controller
 		
 		return $array;
 	}
+	
+	
+	// sorting
+	protected function sortArrayValues($arrVales, $strOrder)
+	{
+		/*
+		 * Notice: Sorting-Code extracted from Contao Core: page/PageRegular.php
+		 *
+		 */
+		
+		if ($strOrder != '')
+		{
+			// Turn the order string into an array and remove all values
+			$arrOrder = explode(',', $strOrder);
+			$arrOrder = array_flip(array_map('intval', $arrOrder));
+			$arrOrder = array_map(function(){}, $arrOrder);
+
+			// Move the matching elements to their position in $arrOrder
+			foreach ($arrVales as $k=>$v)
+			{
+				$arrOrder[$v] = $v;
+				unset($arrVales[$k]);
+			}
+			
+			// Append the left-over style sheets at the end
+			if (!empty($arrVales))
+			{
+				$arrOrder = array_merge($arrOrder, array_values($arrVales));
+			}
+			
+			// Remove empty (unreplaced) entries
+			$arrVales = array_filter($arrOrder);
+		}
+		
+		return $arrVales;
+	}
 }

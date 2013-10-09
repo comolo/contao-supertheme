@@ -28,10 +28,17 @@ class GenerateCoffeescript extends AssetGenerator
 {
 	protected function filesCollector()
 	{
-		return $this->combineArrayValues(
-			(array)unserialize($this->layoutModel->external_js), 
-			(array)unserialize($this->pageModel->external_js)
+		$arrLayoutFiles = $this->sortArrayValues(
+			(array)unserialize($this->layoutModel->external_js), # files
+			$this->layoutModel->external_js_order # order
 		);
+		
+		$arrPageFiles = $this->sortArrayValues(
+			(array)unserialize($this->pageModel->external_js), # files
+			$this->pageModel->external_js_order # order
+		);
+
+		return $this->combineArrayValues($arrLayoutFiles, $arrPageFiles);
 	}
 	
 	protected function assetCompiler($strSourcePath)

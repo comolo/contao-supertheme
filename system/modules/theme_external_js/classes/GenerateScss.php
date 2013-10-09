@@ -30,7 +30,10 @@ class GenerateScss extends AssetGenerator
 {
 	protected function filesCollector()
 	{
-		return (array)unserialize($this->layoutModel->external_scss);
+		return $this->sortArrayValues(
+			(array)unserialize($this->layoutModel->external_scss), # files
+			$this->layoutModel->external_scss_order # order
+		);
 	}
 	
 	protected function assetCompiler($strSourcePath)
