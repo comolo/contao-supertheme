@@ -59,8 +59,8 @@ abstract class AssetGenerator extends \Controller
  				foreach(array_unique($arrFilePaths) as $fileId => $filePath)
  				{
 					// compile & combine
-					$filePath = $this->assetCompiler($filePath);
- 					$combiner->add($filePath);
+					$fileData = $this->assetCompiler($filePath);
+ 					$combiner->add($fileData[0], $fileData[1]); # filePath, version
 				}
 				
 				// add to page

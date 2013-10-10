@@ -39,9 +39,10 @@ class GenerateScss extends AssetGenerator
 	protected function assetCompiler($strSourcePath)
 	{
 		$strCssFilePath = 'assets/css/'.md5($strSourcePath.md5_file($strSourcePath)).'.css';
+		$strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 		
 		if(
-			$this->checkCached($strSourcePath, $strCssFilePath) == false
+			$strCacheVersion == false
 			|| file_exists(TL_ROOT.'/'.$strCssFilePath) == false
 		) {
 			
@@ -63,10 +64,10 @@ class GenerateScss extends AssetGenerator
 			$this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
 			
 			# cache
-			$this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
+			$strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
 		}
 		
-		return $strCssFilePath;
+		return array($strCssFilePath, $strCacheVersion?$strCacheVersion:null);
 	}
 	
 	protected function addAssetToPage($filePath)
@@ -102,7 +103,7 @@ class GenerateScss extends AssetGenerator
 			
 			if($strHash == $strCachedHash){
 				//files are the same
-				return true;
+				return $strHash;
 			}
 			// files changed
 			return false;
@@ -129,6 +130,8 @@ class GenerateScss extends AssetGenerator
 		$strHash = md5($strHash);
 		$strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
 		file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
+		
+		return $strHash;
 	}
 }
 

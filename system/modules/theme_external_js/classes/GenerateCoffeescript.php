@@ -45,7 +45,7 @@ class GenerateCoffeescript extends AssetGenerator
 	{
 		// Javascript File - No compilation required
 		if(substr($strSourcePath, -7) != '.coffee'){
-			return $strSourcePath;
+			return array($strSourcePath, null);
 		}
 		
 		// Target File
@@ -66,7 +66,7 @@ class GenerateCoffeescript extends AssetGenerator
 			$this->compressAsset(TL_ROOT.'/'.$strJSFile);
 		}
 		
-		return $strJSFile;
+		return array($strJSFile, null);
 	}
 	
 	protected function addAssetToPage($filePath)
