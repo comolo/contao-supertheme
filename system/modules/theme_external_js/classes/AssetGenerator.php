@@ -49,7 +49,13 @@ abstract class AssetGenerator extends \Controller
 		if(count($arrFileIds)>0)
 		{
 			// fetch file path
-			$arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
+			// contao 3.2 compability
+			if(method_exists($this->FilesModel,'findMultipleByUuids')){
+				$arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
+			}
+			else {
+				$arrFiles = $this->FilesModel->findMultipleByIds($arrFileIds);
+			}
 			
 			if(is_object($arrFiles) && $arrFiles->count()>0)
 			{
