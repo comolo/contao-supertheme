@@ -45,7 +45,7 @@ class GenerateCoffeescript extends AssetGenerator
 	{
 		// Javascript File - No compilation required
 		if(substr($strSourcePath, -7) != '.coffee'){
-			return array($strSourcePath, null);
+			return array($strSourcePath, md5_file($strSourcePath));
 		}
 		
 		// Target File
