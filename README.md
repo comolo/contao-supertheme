@@ -1,4 +1,5 @@
 ![SuperTheme Logo](https://raw.github.com/comolo/contao-supertheme/relaunch/docs/logo-supertheme.png)
+
 for Contao 3
 
 
@@ -6,7 +7,11 @@ for Contao 3
 ...
 
 ## Installation & Configuration
-...
+There are two ways to install this Contao plugin:
+*  **Contao extension catalog**: You can find the extension by the name "supertheme".
+*  **From Github**: Download the repository from github and merge the "system" folder into your Contao-installation. Don´t forget to update the database!
+
+At the moment the are no configuration options available.
 
 ## How does it work?
 
@@ -27,13 +32,18 @@ At the bottom of the page you now can select Javascript and Coffeescript files.
 You can assign assets to a single page as well. Just edit a page and go to the Expert section.
 Now you should the External Coffee-/Javascript select-field.
 
-### That´s it.
+### 3.) That´s it.
 Refresh your frontend page and have a look at the html markup.
 
-HTML Head:
 ![Markup CSS](https://raw.github.com/comolo/contao-supertheme/relaunch/docs/step3-1.png)
 
-HTML Body (at the bottom):
+
+.....
+
+
 ![Markup JS](https://raw.github.com/comolo/contao-supertheme/relaunch/docs/step3-2.png)
 
+
 **SuperTheme automatically compiles your assets, combines them and adds them to your webpage.**
+
+
