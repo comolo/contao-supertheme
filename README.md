@@ -1,17 +1,19 @@
 ![SuperTheme Logo](https://raw.github.com/comolo/contao-supertheme/relaunch/docs/logo-supertheme.png)
 
-for Contao 3
-
 
 ## What is SuperTheme?
-...
+SuperTheme is Contao 3 module to easily add assets to a page layout. SuperTheme supports scss, coffeescript and javascript files. 
 
-## Installation & Configuration
+
+## Installation
 There are two ways to install this Contao plugin:
 *  **Contao extension catalog**: You can find the extension by the name "supertheme".
 *  **From Github**: Download the repository from github and merge the "system" folder into your Contao-installation. Don´t forget to update the database!
 
+
+## Configuration
 At the moment the are no configuration options available.
+
 
 ## How does it work?
 
