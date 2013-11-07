@@ -5,26 +5,26 @@
  * 
  * Copyright (C) 2005-2013 Leo Feyer
  * 
- * @package   ThemeExternalJS 
- * @author    Hendrik Obermayer - Comolo 
+ * @package   SuperTheme 
+ * @author    Hendrik Obermayer - Comolo GmbH 
  * @license   LGPL 
- * @copyright Hendrik Obermayer - Comolo 
+ * @copyright Hendrik Obermayer - Comolo GmbH 
  */
 
 
 /**
  * Namespace
  */
-namespace ThemeExternalJS;
+namespace SuperTheme;
 
-use \ThemeExternalJS\scssc;
+use \SuperTheme\scssc;
 
 /**
  * Class GenerateScss 
  *
- * @copyright  Hendrik Obermayer - Comolo 
- * @author     Hendrik Obermayer - Comolo 
- * @package    Devtools
+ * @copyright  Hendrik Obermayer - Comolo GmbH 
+ * @author     Hendrik Obermayer - Comolo GmbH 
+ * @package    SuperTheme
  */
 class GenerateScss extends AssetGenerator
 {
@@ -138,9 +138,9 @@ class GenerateScss extends AssetGenerator
 /**
  * Class scssc 
  *
- * @copyright  Hendrik Obermayer - Comolo 
- * @author     Hendrik Obermayer - Comolo 
- * @package    Devtools
+ * @copyright  Hendrik Obermayer - Comolo GmbH
+ * @author     Hendrik Obermayer - Comolo GmbH 
+ * @package    SuperTheme
  */
 class scssc extends \scssc
 {

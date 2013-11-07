@@ -5,24 +5,24 @@
  * 
  * Copyright (C) 2005-2013 Leo Feyer
  * 
- * @package   ThemeExternalJS 
- * @author    Hendrik Obermayer - Comolo 
+ * @package   SuperTheme 
+ * @author    Hendrik Obermayer - Comolo GmbH 
  * @license   LGPL 
- * @copyright Hendrik Obermayer - Comolo 
+ * @copyright Hendrik Obermayer - Comolo GmbH 
  */
 
 
 /**
  * Namespace
  */
-namespace ThemeExternalJS;
+namespace SuperTheme;
 
 /**
  * Class GenerateCoffeescript 
  *
- * @copyright  Hendrik Obermayer - Comolo 
- * @author     Hendrik Obermayer - Comolo 
- * @package    Devtools
+ * @copyright  Hendrik Obermayer - Comolo Comolo GmbH
+ * @author     Hendrik Obermayer - Comolo Comolo GmbH
+ * @package    SuperTheme
  */
 class GenerateCoffeescript extends AssetGenerator
 {

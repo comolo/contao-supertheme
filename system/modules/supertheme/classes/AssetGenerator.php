@@ -5,24 +5,24 @@
  * 
  * Copyright (C) 2005-2013 Leo Feyer
  * 
- * @package   ThemeExternalJS 
- * @author    Hendrik Obermayer - Comolo 
+ * @package   SuperTheme 
+ * @author    Hendrik Obermayer - Comolo GmbH
  * @license   LGPL 
- * @copyright Hendrik Obermayer - Comolo 
+ * @copyright Hendrik Obermayer - Comolo GmbH 
  */
 
 
 /**
  * Namespace
  */
-namespace ThemeExternalJS;
+namespace SuperTheme;
 
 /**
  * Class AssetGenerator 
  *
- * @copyright  Hendrik Obermayer - Comolo 
- * @author     Hendrik Obermayer - Comolo 
- * @package    Devtools
+ * @copyright  Hendrik Obermayer - Comolo GmbH 
+ * @author     Hendrik Obermayer - Comolo GmbH 
+ * @package    SuperTheme
  */
 abstract class AssetGenerator extends \Controller
 {

@@ -5,10 +5,10 @@
  * 
  * Copyright (C) 2005-2013 Leo Feyer
  * 
- * @package   ThemeExternalJS 
- * @author    Hendrik Obermayer - Comolo 
+ * @package   SuperTheme 
+ * @author    Hendrik Obermayer - Comolo GmbH
  * @license   LGPL 
- * @copyright Hendrik Obermayer - Comolo 
+ * @copyright Hendrik Obermayer - Comolo GmbH
  */
 
 
