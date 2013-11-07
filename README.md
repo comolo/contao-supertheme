@@ -2,13 +2,13 @@
 
 
 ## What is SuperTheme?
-SuperTheme is a Contao 3 module to easily add assets to a page layout. **SuperTheme automatically compiles your assets, combines them and adds them to your webpage.** Currently SCSS, CoffeeScript and Javascript are supported.
+SuperTheme is a Contao 3 module to easily add assets to a page layout. **SuperTheme automatically compiles your assets, combines them and adds them to the HTML markup.** Currently SCSS, CoffeeScript and Javascript are supported.
 
 
 ## Installation
 There are two ways to install this Contao plugin:
 *  **Contao extension catalog**: You can find this extension by the name "supertheme".
-*  **From Github**: Download this github repository and merge the "system" folder into your Contao-installation. Don´t forget to update the database!
+*  **From Github**: Download this github repository and merge the "system" folder into your Contao-installation. Don´t forget to update the database and to rebuilt the internal cache!
 
 
 ## Configuration
@@ -18,7 +18,7 @@ At the moment the are no configuration options available.
 ## How does it work?
 
 ### 1.) Assign assets to a layout
-Open the Contao backend and go to "Themes" and click on the pagelayout icon. 
+Open the Contao backend and go to "Themes" and click on the page layout icon. 
 Then edit your existing layout or create a new one. 
 
 At the stylesheets section you can now add SCSS Files.
