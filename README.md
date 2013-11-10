@@ -12,7 +12,7 @@ There are two ways to install this Contao plugin:
 
 
 ## Configuration
-At the moment the are no configuration options available.
+At the moment there are no configuration options available.
 
 
 ## How does it work?
