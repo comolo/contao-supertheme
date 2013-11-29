@@ -36,11 +36,11 @@ Now you should the External Coffee-/Javascript select-field.
 
 ### 3.) That´s it
 Refresh your frontend page and have a look at the html markup.
-
+**Inside the head-tag:**
 ![Markup CSS](https://raw.github.com/comolo/contao-supertheme/relaunch/docs/step3-1.png)
 
 
 .....
 
-
+**At the end of the body-tag** 
 ![Markup JS](https://raw.github.com/comolo/contao-supertheme/relaunch/docs/step3-2.png)
