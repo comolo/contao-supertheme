@@ -1,7 +1,0 @@
-{
-	"require": {
-		"leafo/scssphp": "dev-master",
-		"leafo/scssphp-compass": "dev-master",
-		"coffeescript/coffeescript": "dev-master"
-	}
-}

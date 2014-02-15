@@ -30,6 +30,4 @@ ClassLoader::addClasses(array
 	'SuperTheme\AssetGenerator' 			=> 'system/modules/supertheme/classes/AssetGenerator.php',
 	'SuperTheme\GenerateScss' 				=> 'system/modules/supertheme/classes/GenerateScss.php',
 	'SuperTheme\GenerateCoffeescript' 		=> 'system/modules/supertheme/classes/GenerateCoffeescript.php',
-	'scssc' 								=> 'system/modules/supertheme/vendor/leafo/scssphp/scss.inc.php',
-	'scss_compass' 							=> 'system/modules/supertheme/vendor/leafo/scssphp-compass/compass.inc.php',
 ));

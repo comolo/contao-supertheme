@@ -54,7 +54,6 @@ class GenerateCoffeescript extends AssetGenerator
 		if(!file_exists(TL_ROOT.'/'.$strJSFile)) {
 			
 			// require classes
-			require_once __DIR__.'/../vendor/coffeescript/coffeescript/src/CoffeeScript/Init.php';
 			\CoffeeScript\Init::load();
 		
 			// Compile
