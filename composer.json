@@ -22,7 +22,8 @@
 		"classmap":[""]
 	},
 	"replace":{
-		"contao-legacy/supertheme":"*"
+		"contao-legacy/supertheme":"*",
+        "contao-legacy/theme_external_js":"*"
 	},
 	"extra":{
 		"contao":{
