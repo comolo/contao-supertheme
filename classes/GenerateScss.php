@@ -97,7 +97,7 @@ class GenerateScss extends AssetGenerator
 
 			foreach($arrImportedFiles = explode('|', $arrImportedFiles) as $k => $strImportedFilePath)
 			{
-				$strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
+				$strHash .= md5_file($strImportedFilePath);
 			}
 			$strHash = md5($strHash);
 			
