@@ -7,6 +7,7 @@ SuperTheme is a Contao 3 module to add assets to a page layout easily. **SuperTh
 
 ## Installation
 There are two ways to install this Contao plugin:
+*  **Contao Composer Module**: You can install this package by searching for "comolo/contao-supertheme". Don´t forget to update the database and to rebuilt the internal cache!
 *  **Contao extension catalog**: You can find this extension by the name "supertheme".
 *  **From Github**: Download this github repository and merge the "system" folder into your Contao-installation. Don´t forget to update the database and to rebuilt the internal cache!
 
