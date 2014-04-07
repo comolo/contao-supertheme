@@ -1,6 +1,6 @@
 {
 	"name":"comolo/contao-supertheme",
-	"description":"SuperTheme is a Contao 3 module to easily add assets to a page layout.",
+	"description":"SuperTheme is a Contao 3 module to add assets to a page layout easily.",
 	"keywords":["contao","theme"],
 	"type":"contao-module",
 	"homepage":"http://www.comolo.de",

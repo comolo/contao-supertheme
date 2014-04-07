@@ -17,7 +17,6 @@
 ClassLoader::addNamespaces(array
 (
 	'SuperTheme',
-	''
 ));
 
 

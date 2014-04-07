@@ -92,13 +92,14 @@ class GenerateScss extends AssetGenerator
 		if(file_exists(TL_ROOT.'/'.$cacheFile)) 
 		{
 			$strHash = '';
-			$strCacheContents = file_get_contents(TL_ROOT.'/'.$cacheFile);
-			list($arrImportedFiles, $strCachedHash) = explode('*', $strCacheContents);
+			list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
+			$arrImportedFiles = explode('|', $arrImportedFiles);
 
-			foreach($arrImportedFiles = explode('|', $arrImportedFiles) as $k => $strImportedFilePath)
+			foreach($arrImportedFiles as $strImportedFilePath)
 			{
 				$strHash .= md5_file($strImportedFilePath);
 			}
+			var_dump('c-hash:'.$strHash);
 			$strHash = md5($strHash);
 			
 			if($strHash == $strCachedHash){
@@ -122,11 +123,12 @@ class GenerateScss extends AssetGenerator
 			// remove e.g. compass stylesheets
 			if(strpos($strStylesheetPath, 'system/modules/') !== false){
 				unset($arrImportedStylesheets[$k]);
+				continue;
 			}
-			else {
-				$strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
-			}
+			
+			$strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
 		}
+		var_dump('g-hash:'.$strHash);
 		$strHash = md5($strHash);
 		$strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
 		file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
