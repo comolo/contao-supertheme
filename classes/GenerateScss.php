@@ -99,7 +99,7 @@ class GenerateScss extends AssetGenerator
 			{
 				$strHash .= md5_file($strImportedFilePath);
 			}
-			var_dump('c-hash:'.$strHash);
+			#var_dump('c-hash:'.$strHash);
 			$strHash = md5($strHash);
 			
 			if($strHash == $strCachedHash){
@@ -128,7 +128,7 @@ class GenerateScss extends AssetGenerator
 			
 			$strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
 		}
-		var_dump('g-hash:'.$strHash);
+		#var_dump('g-hash:'.$strHash);
 		$strHash = md5($strHash);
 		$strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
 		file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
