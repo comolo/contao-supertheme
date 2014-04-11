@@ -93,13 +93,16 @@ class GenerateScss extends AssetGenerator
 		{
 			$strHash = '';
 			list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
-			$arrImportedFiles = explode('|', $arrImportedFiles);
-
-			foreach($arrImportedFiles as $strImportedFilePath)
+			
+			if(trim($arrImportedFiles) != '')
 			{
-				$strHash .= md5_file($strImportedFilePath);
+				$arrImportedFiles = explode('|', $arrImportedFiles);
+				foreach($arrImportedFiles as $k => $strImportedFilePath)
+				{
+					$strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
+				}
 			}
-			#var_dump('c-hash:'.$strHash);
+
 			$strHash = md5($strHash);
 			
 			if($strHash == $strCachedHash){
@@ -128,7 +131,7 @@ class GenerateScss extends AssetGenerator
 			
 			$strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
 		}
-		#var_dump('g-hash:'.$strHash);
+		
 		$strHash = md5($strHash);
 		$strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
 		file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
