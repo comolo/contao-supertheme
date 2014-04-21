@@ -2,7 +2,7 @@
 
 
 ## What is SuperTheme?
-SuperTheme (former theme_external_js) is a Contao 3 module to add assets to a page layout easily. **SuperTheme automatically compiles your assets, combines them and adds them to the HTML markup.** Currently SCSS, CoffeeScript and Javascript are supported.
+SuperTheme (formerly known as theme_external_js) is a Contao 3 module to add assets to a page layout easily. **SuperTheme automatically compiles your assets, combines them and adds them to the HTML markup.** Currently SCSS, CoffeeScript and Javascript are supported.
 
 
 ## Installation
