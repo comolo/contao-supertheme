@@ -124,7 +124,11 @@ class GenerateScss extends AssetGenerator
 		foreach($arrImportedStylesheets as $k => $strStylesheetPath)
 		{
 			// remove e.g. compass stylesheets
-			if(strpos($strStylesheetPath, 'system/modules/') !== false){
+			if(
+				strpos($strStylesheetPath, 'system/modules/') !== false
+				|| strpos($strStylesheetPath, 'leafo/scssphp-compass/') !== false
+				|| strpos($strStylesheetPath, 'composer/vendor/') !== false
+			){
 				unset($arrImportedStylesheets[$k]);
 				continue;
 			}
