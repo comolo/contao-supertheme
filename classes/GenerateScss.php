@@ -37,12 +37,12 @@ class GenerateScss extends AssetGenerator
 
     protected function assetCompiler($strSourcePath)
     {
-        $strCssFilePath = 'assets/css/'.md5($strSourcePath.md5_file($strSourcePath)).'.css';
+        $strCssFilePath = 'assets/css/' . md5($strSourcePath . md5_file($strSourcePath)) . '.css';
         $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
         if (
             $strCacheVersion == false
-            || file_exists(TL_ROOT.'/'.$strCssFilePath) == false
+            || file_exists(TL_ROOT . '/' . $strCssFilePath) == false
         ) {
 
             // Add Sass
@@ -50,17 +50,13 @@ class GenerateScss extends AssetGenerator
             $scss->setFormatter('scss_formatter_compressed');
 
             // Import Paths
-            $scss->setImportPaths(dirname($strSourcePath).'/');
+            $scss->setImportPaths(dirname($strSourcePath) . '/');
             $scssImportNamespaces = self::$scssNamespaces;
 
-            var_dump(self::$scssNamespaces);
-            
             $scss->addImportPath(function($filePath) use ($scssImportNamespaces)
             {
                 foreach ($scssImportNamespaces as $namespaces => $scssFolder)
                 {
-                    var_dump($namespaces, $scssFolder);
-
                     if (substr($filePath, 0, strlen($namespaces)) != $namespaces)
                     {
                         return null;
@@ -74,11 +70,8 @@ class GenerateScss extends AssetGenerator
                         $possiblePath .= '.scss';
                     }
 
-                    var_dump( $possiblePath );
-
                     if (file_exists($possiblePath))
                     {
-                        var_dump('#1');
                         return $possiblePath;
                     }
                     
@@ -92,11 +85,11 @@ class GenerateScss extends AssetGenerator
             // Add Compass
             new \scss_compass($scss);
 
-            $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
+            $strCssContent = $scss->compile(file_get_contents(TL_ROOT . '/' . $strSourcePath));
 
             // write css file
-            file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
-            $this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
+            file_put_contents(TL_ROOT . '/' . $strCssFilePath, $strCssContent);
+            $this->compressAsset(TL_ROOT . '/' . $strCssFilePath);
 
             // cache
             $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
@@ -107,7 +100,7 @@ class GenerateScss extends AssetGenerator
 
     protected function addAssetToPage($filePath)
     {
-        $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="'.$filePath.'">';
+        $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="' . $filePath . '">';
     }
 
     protected function customScssFunctions($scss)
@@ -125,13 +118,16 @@ class GenerateScss extends AssetGenerator
     {
         $cacheFile = $strNewPath.'.cache';
 
-        if (file_exists(TL_ROOT.'/'.$cacheFile)) {
+        if (file_exists(TL_ROOT.'/'.$cacheFile)) 
+        {
             $strHash = '';
             list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
 
-            if (trim($arrImportedFiles) != '') {
+            if (trim($arrImportedFiles) != '') 
+            {
                 $arrImportedFiles = explode('|', $arrImportedFiles);
-                foreach ($arrImportedFiles as $k => $strImportedFilePath) {
+                foreach ($arrImportedFiles as $k => $strImportedFilePath) 
+                {
                     $strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
                 }
             }
