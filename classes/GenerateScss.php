@@ -52,10 +52,15 @@ class GenerateScss extends AssetGenerator
             // Import Paths
             $scss->setImportPaths(dirname($strSourcePath).'/');
             $scssImportNamespaces = self::$scssNamespaces;
+
+            var_dump(self::$scssNamespaces);
+            
             $scss->addImportPath(function($filePath) use ($scssImportNamespaces)
             {
                 foreach ($scssImportNamespaces as $namespaces => $scssFolder)
                 {
+                    var_dump($namespaces, $scssFolder);
+                    
                     $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
 
                     if (file_exists($possiblePath))
