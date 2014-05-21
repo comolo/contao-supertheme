@@ -25,6 +25,8 @@ namespace SuperTheme;
  */
 class GenerateScss extends AssetGenerator
 {
+    protected $scssNamespaces = array();
+
     protected function filesCollector()
     {
         return $this->sortArrayValues(
@@ -45,8 +47,27 @@ class GenerateScss extends AssetGenerator
 
             // Add Sass
             $scss = new scssc();
-            $scss->setImportPaths(dirname($strSourcePath).'/');
             $scss->setFormatter('scss_formatter_compressed');
+
+            // Import Paths
+            $scss->setImportPaths(dirname($strSourcePath).'/');
+            $scssImportNamespaces = self::$scssNamespaces;
+            $scss->addImportPath(function($filePath) use ($scssImportNamespaces)
+            {
+                foreach ($scssImportNamespaces as $namespaces => $scssFolder)
+                {
+                    $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
+
+                    if (file_exists($possiblePath))
+                    {
+                        return $possiblePath;
+                    }
+                    else 
+                    {
+                        return null;
+                    }
+                }
+            });
 
             // Add custom function
             $scss = $this->customScssFunctions($scss);
@@ -136,30 +157,12 @@ class GenerateScss extends AssetGenerator
 
         return $strHash;
     }
-}
 
-/**
- * Class scssc
- *
- * @package   SuperTheme
- * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- */
-class scssc extends \scssc
-{
-    protected $importedStylesheets = array();
-
-    // overwrite method to get the impoted files
-    protected function importFile($path, $out)
+    public static function addScssNamespace($arrMapping)
     {
-        $this->importedStylesheets[] = $path;
-
-        // call "original" method
-        return parent::importFile($path, $out);
-    }
-
-    public function getImportedStylesheets()
-    {
-        return $this->importedStylesheets;
+        foreach($arrMapping as $namespace => $scssFolder)
+        {
+            self::$scssNamespaces[$namespace] = $scssFolder;
+        }
     }
 }

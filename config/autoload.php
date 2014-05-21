@@ -27,4 +27,5 @@ ClassLoader::addClasses(array
     'SuperTheme\AssetGenerator'             => 'system/modules/supertheme/classes/AssetGenerator.php',
     'SuperTheme\GenerateScss'               => 'system/modules/supertheme/classes/GenerateScss.php',
     'SuperTheme\GenerateCoffeescript'       => 'system/modules/supertheme/classes/GenerateCoffeescript.php',
+    'SuperTheme\scssc'       				=> 'system/modules/supertheme/classes/scssc.php',
 ));
