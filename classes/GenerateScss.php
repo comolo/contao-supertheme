@@ -61,6 +61,11 @@ class GenerateScss extends AssetGenerator
                 {
                     var_dump($namespaces, $scssFolder);
 
+                    if (substr($filePath, 0, strlen($namespaces)) != $namespaces)
+                    {
+                        return null;
+                    }
+
                     $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
                     $ext = pathinfo($possiblePath, PATHINFO_EXTENSION);
 
@@ -76,10 +81,8 @@ class GenerateScss extends AssetGenerator
                         var_dump('#1');
                         return $possiblePath;
                     }
-                    else 
-                    {
-                        return null;
-                    }
+                    
+                    return null;
                 }
             });
 
