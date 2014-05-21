@@ -7,6 +7,12 @@
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  */
+
+/**
+ * Namespace
+ */
+namespace SuperTheme;
+
 class scssc extends \scssc
 {
     protected $importedStylesheets = array();
