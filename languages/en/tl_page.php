@@ -1,16 +1,14 @@
 <?php
 /**
  * Contao Open Source CMS
- * 
+ *
  * Copyright (C) 2005-2013 Leo Feyer
- * 
- * @package   SuperTheme 
+ *
+ * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH
- * @license   LGPL 
+ * @license   LGPL
  * @copyright Hendrik Obermayer - Comolo GmbH
  */
-
-
 
 /**
  * Buttons
