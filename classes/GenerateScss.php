@@ -60,11 +60,13 @@ class GenerateScss extends AssetGenerator
                 foreach ($scssImportNamespaces as $namespaces => $scssFolder)
                 {
                     var_dump($namespaces, $scssFolder);
-                    
+
                     $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
+                    var_dump( $possiblePath );
 
                     if (file_exists($possiblePath))
                     {
+                        var_dump('#1');
                         return $possiblePath;
                     }
                     else 
