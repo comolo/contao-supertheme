@@ -25,7 +25,7 @@ namespace SuperTheme;
  */
 class GenerateScss extends AssetGenerator
 {
-    protected $scssNamespaces = array();
+    protected static $scssNamespaces = array();
 
     protected function filesCollector()
     {
