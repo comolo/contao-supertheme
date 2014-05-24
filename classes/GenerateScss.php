@@ -44,38 +44,38 @@ class GenerateScss extends AssetGenerator
             $strCacheVersion == false
             || file_exists(TL_ROOT . '/' . $strCssFilePath) == false
         ) {
-
             // Add Sass
             $scss = new scssc();
             $scss->setFormatter('scss_formatter_compressed');
 
             // Import Paths
-            $scss->setImportPaths(dirname($strSourcePath) . '/');
+            self::addScssNamespace(array(
+                ''	=> dirname($strSourcePath) . '/'
+            ));
+
             $scssImportNamespaces = self::$scssNamespaces;
 
-            $scss->addImportPath(function($filePath) use ($scssImportNamespaces)
-            {
-                foreach ($scssImportNamespaces as $namespaces => $scssFolder)
-                {
-                    if (substr($filePath, 0, strlen($namespaces)) != $namespaces)
-                    {
-                        return null;
+            $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
+                foreach ($scssImportNamespaces as $namespace => $scssFolder) {
+                    if (
+                        substr($filePath, 0, strlen($namespace)) != $namespace
+                        && !empty($namespace)
+                    ) {
+                        continue;
                     }
 
                     $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
                     $ext = pathinfo($possiblePath, PATHINFO_EXTENSION);
 
-                    if ($ext != 'scss' || $ext == '')
-                    {
+                    if ($ext != 'scss' || $ext == '') {
                         $possiblePath .= '.scss';
                     }
 
-                    if (file_exists($possiblePath))
-                    {
+                    if (file_exists($possiblePath)) {
                         return $possiblePath;
                     }
-                    
-                    return null;
+
+                    continue;
                 }
             });
 
@@ -108,7 +108,6 @@ class GenerateScss extends AssetGenerator
         // $scss->registerFunction("contao", function ($args) use ($scss) {
         //   do something
         // });
-
         return $scss;
     }
 
@@ -118,16 +117,13 @@ class GenerateScss extends AssetGenerator
     {
         $cacheFile = $strNewPath.'.cache';
 
-        if (file_exists(TL_ROOT.'/'.$cacheFile)) 
-        {
+        if (file_exists(TL_ROOT.'/'.$cacheFile)) {
             $strHash = '';
             list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
 
-            if (trim($arrImportedFiles) != '') 
-            {
+            if (trim($arrImportedFiles) != '') {
                 $arrImportedFiles = explode('|', $arrImportedFiles);
-                foreach ($arrImportedFiles as $k => $strImportedFilePath) 
-                {
+                foreach ($arrImportedFiles as $k => $strImportedFilePath) {
                     $strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
                 }
             }
@@ -173,8 +169,7 @@ class GenerateScss extends AssetGenerator
 
     public static function addScssNamespace($arrMapping)
     {
-        foreach($arrMapping as $namespace => $scssFolder)
-        {
+        foreach ($arrMapping as $namespace => $scssFolder) {
             self::$scssNamespaces[$namespace] = $scssFolder;
         }
     }
