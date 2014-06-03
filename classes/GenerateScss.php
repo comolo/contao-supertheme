@@ -23,154 +23,159 @@ namespace SuperTheme;
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  */
-class GenerateScss extends AssetGenerator
+
+// Fixes an autoloader problem 
+if (!class_exists('SuperTheme\GenerateScss')) 
 {
-    protected static $scssNamespaces = array();
-
-    protected function filesCollector()
+    class GenerateScss extends AssetGenerator
     {
-        return $this->sortArrayValues(
-            (array) unserialize($this->layoutModel->external_scss),
-            $this->layoutModel->external_scss_order
-        );
-    }
+        protected static $scssNamespaces = array();
 
-    protected function assetCompiler($strSourcePath)
-    {
-        $strCssFilePath = 'assets/css/' . md5($strSourcePath . md5_file($strSourcePath)) . '.css';
-        $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
-
-        if (
-            $strCacheVersion == false
-            || file_exists(TL_ROOT . '/' . $strCssFilePath) == false
-        ) {
-            // Add Sass
-            $scss = new scssc();
-            $scss->setFormatter('scss_formatter_compressed');
-
-            // Import Paths
-            self::addScssNamespace(array(
-                ''	=> dirname($strSourcePath) . '/'
-            ));
-
-            $scssImportNamespaces = self::$scssNamespaces;
-
-            $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
-                foreach ($scssImportNamespaces as $namespace => $scssFolder) {
-                    if (
-                        substr($filePath, 0, strlen($namespace)) != $namespace
-                        && !empty($namespace)
-                    ) {
-                        continue;
-                    }
-
-                    $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
-                    $ext = pathinfo($possiblePath, PATHINFO_EXTENSION);
-
-                    if ($ext != 'scss' || $ext == '') {
-                        $possiblePath .= '.scss';
-                    }
-
-                    if (file_exists($possiblePath)) {
-                        return $possiblePath;
-                    }
-
-                    continue;
-                }
-            });
-
-            // Add custom function
-            $scss = $this->customScssFunctions($scss);
-
-            // Add Compass
-            new \scss_compass($scss);
-
-            $strCssContent = $scss->compile(file_get_contents(TL_ROOT . '/' . $strSourcePath));
-
-            // write css file
-            file_put_contents(TL_ROOT . '/' . $strCssFilePath, $strCssContent);
-            $this->compressAsset(TL_ROOT . '/' . $strCssFilePath);
-
-            // cache
-            $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
+        protected function filesCollector()
+        {
+            return $this->sortArrayValues(
+                (array) unserialize($this->layoutModel->external_scss),
+                $this->layoutModel->external_scss_order
+            );
         }
 
-        return array($strCssFilePath, $strCacheVersion?$strCacheVersion:null);
-    }
+        protected function assetCompiler($strSourcePath)
+        {
+            $strCssFilePath = 'assets/css/' . md5($strSourcePath . md5_file($strSourcePath)) . '.css';
+            $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
-    protected function addAssetToPage($filePath)
-    {
-        $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="' . $filePath . '">';
-    }
+            if (
+                $strCacheVersion == false
+                || file_exists(TL_ROOT . '/' . $strCssFilePath) == false
+            ) {
+                // Add Sass
+                $scss = new scssc();
+                $scss->setFormatter('scss_formatter_compressed');
 
-    protected function customScssFunctions($scss)
-    {
-        // $scss->registerFunction("contao", function ($args) use ($scss) {
-        //   do something
-        // });
-        return $scss;
-    }
+                // Import Paths
+                self::addScssNamespace(array(
+                    ''	=> dirname($strSourcePath) . '/'
+                ));
 
-    // Cache methods
-    //
-    public function checkCached($strSourcePath, $strNewPath)
-    {
-        $cacheFile = $strNewPath.'.cache';
+                $scssImportNamespaces = self::$scssNamespaces;
 
-        if (file_exists(TL_ROOT.'/'.$cacheFile)) {
-            $strHash = '';
-            list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
+                $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
+                    foreach ($scssImportNamespaces as $namespace => $scssFolder) {
+                        if (
+                            substr($filePath, 0, strlen($namespace)) != $namespace
+                            && !empty($namespace)
+                        ) {
+                            continue;
+                        }
 
-            if (trim($arrImportedFiles) != '') {
-                $arrImportedFiles = explode('|', $arrImportedFiles);
-                foreach ($arrImportedFiles as $k => $strImportedFilePath) {
-                    $strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
+                        $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
+                        $ext = pathinfo($possiblePath, PATHINFO_EXTENSION);
+
+                        if ($ext != 'scss' || $ext == '') {
+                            $possiblePath .= '.scss';
+                        }
+
+                        if (file_exists($possiblePath)) {
+                            return $possiblePath;
+                        }
+
+                        continue;
+                    }
+                });
+
+                // Add custom function
+                $scss = $this->customScssFunctions($scss);
+
+                // Add Compass
+                new \scss_compass($scss);
+
+                $strCssContent = $scss->compile(file_get_contents(TL_ROOT . '/' . $strSourcePath));
+
+                // write css file
+                file_put_contents(TL_ROOT . '/' . $strCssFilePath, $strCssContent);
+                $this->compressAsset(TL_ROOT . '/' . $strCssFilePath);
+
+                // cache
+                $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
+            }
+
+            return array($strCssFilePath, $strCacheVersion?$strCacheVersion:null);
+        }
+
+        protected function addAssetToPage($filePath)
+        {
+            $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="' . $filePath . '">';
+        }
+
+        protected function customScssFunctions($scss)
+        {
+            // $scss->registerFunction("contao", function ($args) use ($scss) {
+            //   do something
+            // });
+            return $scss;
+        }
+
+        // Cache methods
+        //
+        public function checkCached($strSourcePath, $strNewPath)
+        {
+            $cacheFile = $strNewPath.'.cache';
+
+            if (file_exists(TL_ROOT.'/'.$cacheFile)) {
+                $strHash = '';
+                list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
+
+                if (trim($arrImportedFiles) != '') {
+                    $arrImportedFiles = explode('|', $arrImportedFiles);
+                    foreach ($arrImportedFiles as $k => $strImportedFilePath) {
+                        $strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
+                    }
                 }
+
+                $strHash = md5($strHash);
+
+                if ($strHash == $strCachedHash) {
+                    //files are the same
+                    return $strHash;
+                }
+                // files changed
+                return false;
+            }
+            // no cache file found
+            return false;
+        }
+
+        public function generateCache($strSourcePath, $strNewPath, $arrImportedStylesheets)
+        {
+            $cacheFile = $strNewPath.'.cache';
+            $strHash = '';
+
+            foreach ($arrImportedStylesheets as $k => $strStylesheetPath) {
+                // remove e.g. compass stylesheets
+                if (
+                    strpos($strStylesheetPath, 'system/modules/') !== false
+                    || strpos($strStylesheetPath, 'leafo/scssphp-compass/') !== false
+                    || strpos($strStylesheetPath, 'composer/vendor/') !== false
+                ) {
+                    unset($arrImportedStylesheets[$k]);
+                    continue;
+                }
+
+                $strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
             }
 
             $strHash = md5($strHash);
+            $strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
+            file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
 
-            if ($strHash == $strCachedHash) {
-                //files are the same
-                return $strHash;
-            }
-            // files changed
-            return false;
-        }
-        // no cache file found
-        return false;
-    }
-
-    public function generateCache($strSourcePath, $strNewPath, $arrImportedStylesheets)
-    {
-        $cacheFile = $strNewPath.'.cache';
-        $strHash = '';
-
-        foreach ($arrImportedStylesheets as $k => $strStylesheetPath) {
-            // remove e.g. compass stylesheets
-            if (
-                strpos($strStylesheetPath, 'system/modules/') !== false
-                || strpos($strStylesheetPath, 'leafo/scssphp-compass/') !== false
-                || strpos($strStylesheetPath, 'composer/vendor/') !== false
-            ) {
-                unset($arrImportedStylesheets[$k]);
-                continue;
-            }
-
-            $strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
+            return $strHash;
         }
 
-        $strHash = md5($strHash);
-        $strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
-        file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
-
-        return $strHash;
-    }
-
-    public static function addScssNamespace($arrMapping)
-    {
-        foreach ($arrMapping as $namespace => $scssFolder) {
-            self::$scssNamespaces[$namespace] = $scssFolder;
+        public static function addScssNamespace($arrMapping)
+        {
+            foreach ($arrMapping as $namespace => $scssFolder) {
+                self::$scssNamespaces[$namespace] = $scssFolder;
+            }
         }
     }
 }
