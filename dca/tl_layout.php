@@ -17,8 +17,8 @@
 
 // Add external_js + external_scss
 $GLOBALS['TL_DCA']['tl_layout']['palettes']['default'] = str_replace(
-    array(',script;', 'stylesheet,external;'),
-    array(',script,external_js;', 'stylesheet,external,external_scss;'),
+    array(',script;', 'stylesheet,external;', 'stylesheet,external,'),
+    array(',script,external_js;', 'stylesheet,external,external_scss;', 'stylesheet,external,external_scss,'),
     $GLOBALS['TL_DCA']['tl_layout']['palettes']['default']
 );
 
