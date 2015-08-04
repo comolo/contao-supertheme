@@ -24,8 +24,8 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
     // Classes
-    'SuperTheme\AssetGenerator'             => 'system/modules/supertheme/classes/AssetGenerator.php',
-    'SuperTheme\GenerateScss'               => 'system/modules/supertheme/classes/GenerateScss.php',
-    'SuperTheme\GenerateCoffeescript'       => 'system/modules/supertheme/classes/GenerateCoffeescript.php',
-    'SuperTheme\scssc'       				=> 'system/modules/supertheme/classes/scssc.php',
+    'SuperTheme\AssetGenerator'             => 'vendor/comolo/contao-supertheme/src/Resources/contao/classes/AssetGenerator.php',
+    'SuperTheme\GenerateScss'               => 'vendor/comolo/contao-supertheme/src/Resources/contao/classes/GenerateScss.php',
+    'SuperTheme\GenerateCoffeescript'       => 'vendor/comolo/contao-supertheme/src/Resources/contao/classes/GenerateCoffeescript.php',
+    'SuperTheme\scssc'       				=> 'vendor/comolo/contao-supertheme/src/Resources/contao/classes/scssc.php',
 ));
