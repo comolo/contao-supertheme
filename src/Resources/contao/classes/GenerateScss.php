@@ -87,7 +87,7 @@ if (!class_exists('SuperTheme\GenerateScss'))
                 $scss = $this->customScssFunctions($scss);
 
                 // Add Compass
-                new \scss_compass($scss);
+                new \Comolo\ScssCompass\ScssCompass($scss);
 
                 $strCssContent = $scss->compile(file_get_contents(TL_ROOT . '/' . $strSourcePath));
 
@@ -156,6 +156,7 @@ if (!class_exists('SuperTheme\GenerateScss'))
                     strpos($strStylesheetPath, 'system/modules/') !== false
                     || strpos($strStylesheetPath, 'leafo/scssphp-compass/') !== false
                     || strpos($strStylesheetPath, 'composer/vendor/') !== false
+                    || strpos($strStylesheetPath, 'vendor/') !== false
                 ) {
                     unset($arrImportedStylesheets[$k]);
                     continue;
