@@ -41,7 +41,7 @@ if (!class_exists('SuperTheme\GenerateScss'))
 
         protected function assetCompiler($strSourcePath)
         {
-            $strCssFilePath = 'assets/css/' . md5($strSourcePath . md5_file($strSourcePath)) . '.css';
+            $strCssFilePath =  '/assets/css/' . md5($strSourcePath . md5_file(TL_ROOT . '/' . $strSourcePath)) . '.css';
             $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
             if (
