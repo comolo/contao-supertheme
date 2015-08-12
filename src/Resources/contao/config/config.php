@@ -17,7 +17,7 @@ $GLOBALS['TL_HOOKS']['generatePage'][] = array('GenerateCoffeescript', 'generate
 //
 // @import 'supertheme/test' => system/modules/.../supertheme/test.scss
 // 
-\GenerateScss::addScssNamespace(array
-(
-	'supertheme'	=> 'system/modules/supertheme/assets/',
-));
+//\GenerateScss::addScssNamespace(array
+//(
+//	'supertheme'	=> 'system/modules/supertheme/assets/',
+//));
