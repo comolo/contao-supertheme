@@ -39,12 +39,14 @@ class ScssGenerator extends AssetGenerator
     protected function assetCompiler($strSourcePath)
     {
         $strCssFilePath = '/assets/css/'.md5($strSourcePath.md5_file(TL_ROOT.'/'.$strSourcePath)).'.css';
-        $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
-
-        if (
-                $strCacheVersion == false
-                || file_exists(TL_ROOT.'/'.$strCssFilePath) == false
-            ) {
+        $fileExists = file_exists(TL_ROOT.'/'.$strCssFilePath);
+        
+        if (!$fileExists || !$this->isProductiveMode()) {
+             
+             $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
+             
+             if (!$strCacheVersion) {
+                 
             // Add Sass
                 $scss = new ScssCompiler();
             $scss->setFormatter('scss_formatter_compressed');
@@ -94,6 +96,7 @@ class ScssGenerator extends AssetGenerator
 
                 // cache
                 $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
+            }
         }
 
         return array($strCssFilePath, $strCacheVersion ? $strCacheVersion : null);
