@@ -1,29 +1,30 @@
 <?php
 
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (C) 2005-2013 Leo Feyer
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @license   LGPL
  */
 
 /**
- * Namespace
+ * Namespace.
  */
-namespace SuperTheme;
+namespace Comolo\SuperThemeBundle\Module;
+
+use CoffeeScript\Compiler as CoffeeScriptCompiler;
+use CoffeeScript\Init as CoffeeScriptInit;
 
 /**
- * Class GenerateCoffeescript
+ * Class GenerateCoffeescript.
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo Comolo GmbH <mail@comolo.de>
  */
-class GenerateCoffeescript extends AssetGenerator
+class CoffeescriptGenerator extends AssetGenerator
 {
     protected function filesCollector()
     {
@@ -53,11 +54,11 @@ class GenerateCoffeescript extends AssetGenerator
         if (!file_exists(TL_ROOT.'/'.$strJSFile)) {
 
             // require classes
-            \CoffeeScript\Init::load();
+            CoffeeScriptInit::load();
 
             // Compile
             $strCoffee = file_get_contents($strSourcePath);
-            $strJs = \CoffeeScript\Compiler::compile($strCoffee, array('filename' => $strSourcePath));
+            $strJs = CoffeeScriptCompiler::compile($strCoffee, array('filename' => $strSourcePath));
 
             // write css file / replace with contao framework method later
             file_put_contents(TL_ROOT.'/'.$strJSFile, $strJs);

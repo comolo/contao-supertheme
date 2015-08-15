@@ -1,65 +1,62 @@
 <?php
 
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (C) 2005-2013 Leo Feyer
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @license   LGPL
  */
 
 /**
- * Namespace
+ * Namespace.
  */
-namespace SuperTheme;
+namespace Comolo\SuperThemeBundle\Module;
+
+use Comolo\ScssCompass\ScssCompassPlugin;
+use Comolo\SuperThemeBundle\Helper\ScssCompiler;
 
 /**
- * Class GenerateScss
+ * Class GenerateScss.
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  */
-
-// Fixes an autoloader problem 
-if (!class_exists('SuperTheme\GenerateScss')) 
+class ScssGenerator extends AssetGenerator
 {
-    class GenerateScss extends AssetGenerator
-    {
-        protected static $scssNamespaces = array();
+    protected static $scssNamespaces = array();
 
-        protected function filesCollector()
-        {
-            return $this->sortArrayValues(
+    protected function filesCollector()
+    {
+        return $this->sortArrayValues(
                 (array) unserialize($this->layoutModel->external_scss),
                 $this->layoutModel->external_scss_order
             );
-        }
+    }
 
-        protected function assetCompiler($strSourcePath)
-        {
-            $strCssFilePath =  '/assets/css/' . md5($strSourcePath . md5_file(TL_ROOT . '/' . $strSourcePath)) . '.css';
-            $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
+    protected function assetCompiler($strSourcePath)
+    {
+        $strCssFilePath = '/assets/css/'.md5($strSourcePath.md5_file(TL_ROOT.'/'.$strSourcePath)).'.css';
+        $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
-            if (
+        if (
                 $strCacheVersion == false
-                || file_exists(TL_ROOT . '/' . $strCssFilePath) == false
+                || file_exists(TL_ROOT.'/'.$strCssFilePath) == false
             ) {
-                // Add Sass
-                $scss = new scssc();
-                $scss->setFormatter('scss_formatter_compressed');
+            // Add Sass
+                $scss = new ScssCompiler();
+            $scss->setFormatter('scss_formatter_compressed');
 
                 // Import Paths
                 self::addScssNamespace(array(
-                    ''	=> dirname($strSourcePath) . '/'
+                    '' => dirname($strSourcePath).'/',
                 ));
 
-                $scssImportNamespaces = self::$scssNamespaces;
+            $scssImportNamespaces = self::$scssNamespaces;
 
-                $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
+            $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
                     foreach ($scssImportNamespaces as $namespace => $scssFolder) {
                         if (
                             substr($filePath, 0, strlen($namespace)) != $namespace
@@ -68,7 +65,7 @@ if (!class_exists('SuperTheme\GenerateScss'))
                             continue;
                         }
 
-                        $possiblePath = TL_ROOT . '/' . $scssFolder . $filePath;
+                        $possiblePath = TL_ROOT.'/'.$scssFolder.$filePath;
                         $ext = pathinfo($possiblePath, PATHINFO_EXTENSION);
 
                         if ($ext != 'scss' || $ext == '') {
@@ -87,33 +84,33 @@ if (!class_exists('SuperTheme\GenerateScss'))
                 $scss = $this->customScssFunctions($scss);
 
                 // Add Compass
-                new \Comolo\ScssCompass\ScssCompass($scss);
+                new ScssCompassPlugin($scss);
 
-                $strCssContent = $scss->compile(file_get_contents(TL_ROOT . '/' . $strSourcePath));
+            $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
 
                 // write css file
-                file_put_contents(TL_ROOT . '/' . $strCssFilePath, $strCssContent);
-                $this->compressAsset(TL_ROOT . '/' . $strCssFilePath);
+                file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
+            $this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
 
                 // cache
                 $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
-            }
-
-            return array($strCssFilePath, $strCacheVersion?$strCacheVersion:null);
         }
 
-        protected function addAssetToPage($filePath)
-        {
-            $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="' . $filePath . '">';
-        }
+        return array($strCssFilePath, $strCacheVersion ? $strCacheVersion : null);
+    }
 
-        protected function customScssFunctions($scss)
-        {
-            // $scss->registerFunction("contao", function ($args) use ($scss) {
+    protected function addAssetToPage($filePath)
+    {
+        $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="'.$filePath.'">';
+    }
+
+    protected function customScssFunctions($scss)
+    {
+        // $scss->registerFunction("contao", function ($args) use ($scss) {
             //   do something
             // });
             return $scss;
-        }
+    }
 
         // Cache methods
         //
@@ -145,13 +142,13 @@ if (!class_exists('SuperTheme\GenerateScss'))
             return false;
         }
 
-        public function generateCache($strSourcePath, $strNewPath, $arrImportedStylesheets)
-        {
-            $cacheFile = $strNewPath.'.cache';
-            $strHash = '';
+    public function generateCache($strSourcePath, $strNewPath, $arrImportedStylesheets)
+    {
+        $cacheFile = $strNewPath.'.cache';
+        $strHash = '';
 
-            foreach ($arrImportedStylesheets as $k => $strStylesheetPath) {
-                // remove e.g. compass stylesheets
+        foreach ($arrImportedStylesheets as $k => $strStylesheetPath) {
+            // remove e.g. compass stylesheets
                 if (
                     strpos($strStylesheetPath, 'system/modules/') !== false
                     || strpos($strStylesheetPath, 'leafo/scssphp-compass/') !== false
@@ -162,21 +159,20 @@ if (!class_exists('SuperTheme\GenerateScss'))
                     continue;
                 }
 
-                $strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
-            }
-
-            $strHash = md5($strHash);
-            $strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
-            file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
-
-            return $strHash;
+            $strHash .= md5_file(TL_ROOT.'/'.$strStylesheetPath);
         }
 
-        public static function addScssNamespace($arrMapping)
-        {
-            foreach ($arrMapping as $namespace => $scssFolder) {
-                self::$scssNamespaces[$namespace] = $scssFolder;
-            }
+        $strHash = md5($strHash);
+        $strContents = implode('|', $arrImportedStylesheets).'*'.$strHash;
+        file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
+
+        return $strHash;
+    }
+
+    public static function addScssNamespace($arrMapping)
+    {
+        foreach ($arrMapping as $namespace => $scssFolder) {
+            self::$scssNamespaces[$namespace] = $scssFolder;
         }
     }
 }

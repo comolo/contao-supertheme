@@ -1,19 +1,18 @@
 <?php
 
 /**
- * Class scssc
+ * Class scssc.
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  */
 
 /**
- * Namespace
+ * Namespace.
  */
-namespace SuperTheme;
+namespace Comolo\SuperThemeBundle\Helper;
 
-class scssc extends \scssc
+class ScssCompiler extends \scssc
 {
     protected $importedStylesheets = array();
 
@@ -30,13 +29,13 @@ class scssc extends \scssc
     {
         return $this->importedStylesheets;
     }
-	
-	protected function removeTlPath($path)
-	{
-		if (substr($path, 0, strlen(TL_ROOT)) == TL_ROOT) {
-		    $path = substr($path, strlen(TL_ROOT));
-		}
-		
-		return $path;
-	}
+
+    protected function removeTlPath($path)
+    {
+        if (substr($path, 0, strlen(TL_ROOT)) == TL_ROOT) {
+            $path = substr($path, strlen(TL_ROOT));
+        }
+
+        return $path;
+    }
 }

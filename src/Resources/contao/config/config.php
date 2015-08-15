@@ -1,18 +1,16 @@
 <?php
 
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (C) 2005-2013 Leo Feyer
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH
  * @license   LGPL
  * @copyright Hendrik Obermayer - Comolo GmbH
  */
-
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('GenerateScss', 'generate');
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('GenerateCoffeescript', 'generate');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('\Comolo\SuperThemeBundle\Module\ScssGenerator', 'generate');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('\Comolo\SuperThemeBundle\Module\CoffeescriptGenerator', 'generate');
 
 //
 // @import 'supertheme/test' => system/modules/.../supertheme/test.scss
@@ -21,3 +19,4 @@ $GLOBALS['TL_HOOKS']['generatePage'][] = array('GenerateCoffeescript', 'generate
 //(
 //	'supertheme'	=> 'system/modules/supertheme/assets/',
 //));
+
