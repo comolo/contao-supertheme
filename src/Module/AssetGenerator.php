@@ -143,4 +143,12 @@ abstract class AssetGenerator extends \Controller
 
         return $arrVales;
     }
+    
+    /**
+     * check if contao is running in prod mode.
+     * 
+     */
+    function isProductiveMode() {
+        return !in_array(System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+    }
 }
