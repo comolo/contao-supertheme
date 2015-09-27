@@ -149,6 +149,6 @@ abstract class AssetGenerator extends \Controller
      * 
      */
     function isProductiveMode() {
-        return !in_array(System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+        return !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
     }
 }
