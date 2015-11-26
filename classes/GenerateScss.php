@@ -16,6 +16,8 @@
  */
 namespace SuperTheme;
 
+use Comolo\ScssCompass\CompassPlugin;
+    
 /**
  * Class GenerateScss
  *
@@ -87,7 +89,7 @@ if (!class_exists('SuperTheme\GenerateScss'))
                 $scss = $this->customScssFunctions($scss);
 
                 // Add Compass
-                new \scss_compass($scss);
+                new CompassPlugin($scss);
 
                 $strCssContent = $scss->compile(file_get_contents(TL_ROOT . '/' . $strSourcePath));
 
