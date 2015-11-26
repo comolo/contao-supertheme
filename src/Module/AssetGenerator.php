@@ -6,7 +6,7 @@
  * Copyright (C) 2005-2013 Leo Feyer
  *
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * @copyright 2015 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @license   LGPL
  */
 

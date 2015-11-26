@@ -6,7 +6,7 @@
  * Copyright (C) 2005-2013 Leo Feyer
  *
  * @author    Hendrik Obermayer - Comolo GmbH
- * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * @copyright 2015 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @license   LGPL
  */
 
@@ -18,7 +18,7 @@ namespace Comolo\SuperThemeBundle\Module;
 use Comolo\SuperThemeBundle\Helper\ScssCompiler;
 
 /**
- * Class GenerateScss.
+ * Class ScssGenerator.
  *
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
@@ -44,16 +44,9 @@ class ScssGenerator extends AssetGenerator
             $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
             if (!$strCacheVersion) {
-                // Add Sass
+                
                 $scss = new ScssCompiler();
-                $scss->setFormatter('scss_formatter_compressed');
-
-                // Import Paths
-                self::addScssNamespace(array(
-                    '' => dirname($strSourcePath).'/',
-                ));
-
-                $scssImportNamespaces = self::$scssNamespaces;
+                $scss->setFormatter('Leafo\ScssPhp\Formatter\Compressed');
 
                 $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
                     foreach ($scssImportNamespaces as $namespace => $scssFolder) {
@@ -168,12 +161,5 @@ class ScssGenerator extends AssetGenerator
         file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
 
         return $strHash;
-    }
-
-    public static function addScssNamespace($arrMapping)
-    {
-        foreach ($arrMapping as $namespace => $scssFolder) {
-            self::$scssNamespaces[$namespace] = $scssFolder;
-        }
     }
 }

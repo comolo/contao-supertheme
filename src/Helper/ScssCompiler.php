@@ -14,8 +14,9 @@
 namespace Comolo\SuperThemeBundle\Helper;
 
 use Comolo\ScssCompass\CompassPlugin;
+use Leafo\ScssPhp\Compiler;
 
-class ScssCompiler extends \scssc
+class ScssCompiler extends Compiler
 {
     protected $importedStylesheets = array();
 
