@@ -9,6 +9,7 @@
  * @copyright 2015 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @license   LGPL
  */
+
 namespace Comolo\SuperThemeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

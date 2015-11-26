@@ -10,6 +10,7 @@
 /**
  * Namespace.
  */
+
 namespace Comolo\SuperThemeBundle\Helper;
 
 class ScssCompiler extends \scssc

@@ -11,7 +11,7 @@
  */
 
 /**
- * Namespace.
+ * Namespace
  */
 namespace Comolo\SuperThemeBundle\Module;
 
@@ -31,34 +31,32 @@ class ScssGenerator extends AssetGenerator
     protected function filesCollector()
     {
         return $this->sortArrayValues(
-                (array) unserialize($this->layoutModel->external_scss),
-                $this->layoutModel->external_scss_order
-            );
+            (array) unserialize($this->layoutModel->external_scss),
+            $this->layoutModel->external_scss_order
+        );
     }
 
     protected function assetCompiler($strSourcePath)
     {
         $strCssFilePath = '/assets/css/'.md5($strSourcePath.md5_file(TL_ROOT.'/'.$strSourcePath)).'.css';
         $fileExists = file_exists(TL_ROOT.'/'.$strCssFilePath);
-        
+
         if (!$fileExists || !$this->isProductiveMode()) {
-             
-             $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
-             
-             if (!$strCacheVersion) {
-                 
-            // Add Sass
+            $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
+
+            if (!$strCacheVersion) {
+                // Add Sass
                 $scss = new ScssCompiler();
-            $scss->setFormatter('scss_formatter_compressed');
+                $scss->setFormatter('scss_formatter_compressed');
 
                 // Import Paths
                 self::addScssNamespace(array(
                     '' => dirname($strSourcePath).'/',
                 ));
 
-            $scssImportNamespaces = self::$scssNamespaces;
+                $scssImportNamespaces = self::$scssNamespaces;
 
-            $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
+                $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
                     foreach ($scssImportNamespaces as $namespace => $scssFolder) {
                         if (
                             substr($filePath, 0, strlen($namespace)) != $namespace
@@ -86,13 +84,14 @@ class ScssGenerator extends AssetGenerator
                 $scss = $this->customScssFunctions($scss);
 
                 // Add Compass
-                new CompassPlugin($scss);
+                $scss->addCompassPlugin();
+                //new CompassPlugin($scss);
 
-            $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
+                $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
 
                 // write css file
                 file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
-            $this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
+                $this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
 
                 // cache
                 $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
@@ -112,38 +111,39 @@ class ScssGenerator extends AssetGenerator
         // $scss->registerFunction("contao", function ($args) use ($scss) {
             //   do something
             // });
-            return $scss;
+        return $scss;
     }
 
-        // Cache methods
-        //
-        public function checkCached($strSourcePath, $strNewPath)
-        {
-            $cacheFile = $strNewPath.'.cache';
+    // Cache methods
+    //    
+    public function checkCached($strSourcePath, $strNewPath)
+    {
+        $cacheFile = $strNewPath.'.cache';
 
-            if (file_exists(TL_ROOT.'/'.$cacheFile)) {
-                $strHash = '';
-                list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
+        if (file_exists(TL_ROOT.'/'.$cacheFile)) {
+            $strHash = '';
+            list($arrImportedFiles, $strCachedHash) = explode('*', file_get_contents(TL_ROOT.'/'.$cacheFile));
 
-                if (trim($arrImportedFiles) != '') {
-                    $arrImportedFiles = explode('|', $arrImportedFiles);
-                    foreach ($arrImportedFiles as $k => $strImportedFilePath) {
-                        $strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
-                    }
+            if (trim($arrImportedFiles) != '') {
+                $arrImportedFiles = explode('|', $arrImportedFiles);
+                foreach ($arrImportedFiles as $k => $strImportedFilePath) {
+                    $strHash .= md5_file(TL_ROOT.'/'.$strImportedFilePath);
                 }
-
-                $strHash = md5($strHash);
-
-                if ($strHash == $strCachedHash) {
-                    //files are the same
-                    return $strHash;
-                }
-                // files changed
-                return false;
             }
-            // no cache file found
+
+            $strHash = md5($strHash);
+
+            if ($strHash == $strCachedHash) {
+                //files are the same
+                return $strHash;
+            }
+            
+            // files changed
             return false;
         }
+        // no cache file found
+        return false;
+    }
 
     public function generateCache($strSourcePath, $strNewPath, $arrImportedStylesheets)
     {

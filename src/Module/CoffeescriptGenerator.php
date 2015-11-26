@@ -13,6 +13,7 @@
 /**
  * Namespace.
  */
+
 namespace Comolo\SuperThemeBundle\Module;
 
 use CoffeeScript\Compiler as CoffeeScriptCompiler;
@@ -45,7 +46,7 @@ class CoffeescriptGenerator extends AssetGenerator
     {
         // Javascript File - No compilation required
         if (substr($strSourcePath, -7) != '.coffee') {
-            return array($strSourcePath, md5_file(TL_ROOT . '/' . $strSourcePath));
+            return array($strSourcePath, md5_file(TL_ROOT.'/'.$strSourcePath));
         }
 
         // Target File

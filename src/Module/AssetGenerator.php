@@ -13,6 +13,7 @@
 /**
  * Namespace.
  */
+
 namespace Comolo\SuperThemeBundle\Module;
 
 /**
@@ -143,12 +144,13 @@ abstract class AssetGenerator extends \Controller
 
         return $arrVales;
     }
-    
+
     /**
      * check if contao is running in prod mode.
-     * 
      */
-    function isProductiveMode() {
+    public function isProductiveMode()
+    {
+        // Todo: Backend setting to force supertheme dev mode
         return !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
     }
 }
