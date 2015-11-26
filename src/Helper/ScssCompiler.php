@@ -13,6 +13,8 @@
 
 namespace Comolo\SuperThemeBundle\Helper;
 
+use Comolo\ScssCompass\CompassPlugin;
+
 class ScssCompiler extends \scssc
 {
     protected $importedStylesheets = array();
@@ -29,6 +31,10 @@ class ScssCompiler extends \scssc
     public function getImportedStylesheets()
     {
         return $this->importedStylesheets;
+    }
+    
+    public function addCompassPlugin() {
+        new CompassPlugin($this);
     }
 
     protected function removeTlPath($path)

@@ -15,7 +15,6 @@
  */
 namespace Comolo\SuperThemeBundle\Module;
 
-use Comolo\ScssCompass\CompassPlugin;
 use Comolo\SuperThemeBundle\Helper\ScssCompiler;
 
 /**
@@ -85,7 +84,6 @@ class ScssGenerator extends AssetGenerator
 
                 // Add Compass
                 $scss->addCompassPlugin();
-                //new CompassPlugin($scss);
 
                 $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
 
