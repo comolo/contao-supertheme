@@ -46,8 +46,14 @@ class ScssGenerator extends AssetGenerator
             if (!$strCacheVersion) {
                 
                 $scss = new ScssCompiler();
-                $scss->setFormatter('Leafo\ScssPhp\Formatter\Compressed');
-
+                $scss->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
+                
+                // Import Paths
+                self::addScssNamespace(array(
+                    ''	=> dirname($strSourcePath) . '/'
+                ));
+                $scssImportNamespaces = self::$scssNamespaces;
+                
                 $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
                     foreach ($scssImportNamespaces as $namespace => $scssFolder) {
                         if (
@@ -161,5 +167,12 @@ class ScssGenerator extends AssetGenerator
         file_put_contents(TL_ROOT.'/'.$cacheFile, $strContents);
 
         return $strHash;
+    }
+    
+    public static function addScssNamespace($arrMapping)
+    {
+        foreach ($arrMapping as $namespace => $scssFolder) {
+            self::$scssNamespaces[$namespace] = $scssFolder;
+        }
     }
 }
