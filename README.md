@@ -36,5 +36,6 @@ $bundles = [
 Clear your internal cache and update your database with the InstallTool.
 
 
-## Configuration
-At the moment there are no configuration options available.
+
+## Release notes
+* To make SuperTheme incredibly fast, scss-files won´t get checked for changes anymore, if Contao runs in productive mode (entry point web/app.php). I recommend to run Contao in dev mode while programming the layout of a new website.
