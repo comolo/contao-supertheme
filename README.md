@@ -6,7 +6,34 @@ SuperTheme is a Contao module to add SCSS, JS, CoffeeScript to a page layout eas
 
 
 ## Installation
-*  **Contao Composer Module**: You can install this package by searching for "comolo/contao-supertheme". Don´t forget to update the database and to rebuilt the internal cache!
+
+**Step 1:**
+```bash
+cd contao_4; # Your Contao 4 root directory 
+composer.phar require comolo/contao-supertheme
+```
+
+**Step 2:**
+Register the SuperTheme bundle in the AppKernel.
+
+```php
+// app/AppKernel.php
+
+// ...
+$bundles = [
+    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+    new Symfony\Bundle\TwigBundle\TwigBundle(),
+    // ... and some more
+    
+    // add this line
+    new Comolo\SuperThemeBundle\ComoloSuperThemeBundle(),
+];
+// ...
+```
+
+**Step 3:**
+Clear your internal cache and update your database with the InstallTool.
 
 
 ## Configuration
