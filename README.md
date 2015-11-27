@@ -4,13 +4,14 @@
 ## What is SuperTheme?
 SuperTheme (formerly known as theme_external_js) is a Contao 3 module to add assets to a page layout easily. **SuperTheme automatically compiles your assets, combines them and adds them to the HTML markup.** Currently SCSS, CoffeeScript and Javascript are supported.
 
+## Contao 4 Support
+**We got some good news :-)** SuperTheme does now support Contao 4 in a stable manner.
+It runs as a native symfony bundle and we also added some features to make SuperTheme even more efficient and stable.
+You can find the installation instructions in the contao4 branch of this repository.
+
 
 ## Installation
 *  **Contao Composer Module**: You can install this package by searching for "comolo/contao-supertheme". Don´t forget to update the database and to rebuilt the internal cache!
-
-
-## Configuration
-At the moment there are no configuration options available.
 
 
 ## How does it work?
