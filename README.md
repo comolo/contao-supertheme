@@ -2,7 +2,8 @@
 
 
 ## What is SuperTheme?
-SuperTheme is a Contao module to add SCSS, JS, CoffeeScript to a page layout easily. **SuperTheme automatically compiles your assets, combines them and adds them to the HTML markup.**
+SuperTheme is a Contao module to add SCSS, JS, CoffeeScript to a page layout easily. 
+**SuperTheme automatically compiles your assets, combines them and adds them to the HTML markup.**
 
 
 ## Installation
