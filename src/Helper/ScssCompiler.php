@@ -34,8 +34,9 @@ class ScssCompiler extends Compiler
         return $this->importedStylesheets;
     }
     
-    public function addCompassPlugin() {
+    public function addPlugins() {
         new CompassPlugin($this);
+        $this->addImportPath(__DIR__ . '/../Resources/scss/');
     }
 
     protected function removeTlPath($path)

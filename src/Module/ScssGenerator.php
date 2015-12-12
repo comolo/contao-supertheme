@@ -82,7 +82,7 @@ class ScssGenerator extends AssetGenerator
                 $scss = $this->customScssFunctions($scss);
 
                 // Add Compass
-                $scss->addCompassPlugin();
+                $scss->addPlugins();
 
                 $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
 
