@@ -2,6 +2,7 @@
  * Contao Open Source CMS
  *
  * Copyright (c) 2005-2015 Leo Feyer
+ * Modified by Hendrik Obermayer, Comolo GmbH
  *
  * @license LGPL-3.0+
  */
@@ -134,78 +135,82 @@
 /**
  * Full-Screen Mode
  */
-@media (min-width:1450px)
-{
-	/**
-	 * Reduce the overall width
-	 */
-	#wrapper, .wrapper-element {
-		width:1280px;
+$grid-large-screen: true !default;
+
+@if $grid-large-screen == true {
+	@media (min-width:1450px)
+	{
+		/**
+		 * Reduce the overall width
+		 */
+		#wrapper, .wrapper-element {
+			width:1280px;
+		}
+
+		/**
+		 * Reduce the grid column widths
+		 */
+		.grid1  { width:86px;  }
+		.grid2  { width:193px; }
+		.grid3  { width:300px; }
+		.grid4  { width:406px; }
+		.grid5  { width:513px; }
+		.grid6  { width:620px; }
+		.grid7  { width:726px; }
+		.grid8  { width:833px; }
+		.grid9  { width:940px; }
+		.grid10 { width:1046px; }
+		.grid11 { width:1153px; }
+		.grid12 { width:1260px; }
+
+		/**
+		 * Floated articles can be 20 pixel wider (no margin)
+		 */
+		.mod_article.grid1  { width:106px;  }
+		.mod_article.grid2  { width:213px; }
+		.mod_article.grid3  { width:320px; }
+		.mod_article.grid4  { width:426px; }
+		.mod_article.grid5  { width:533px; }
+		.mod_article.grid6  { width:640px; }
+		.mod_article.grid7  { width:746px; }
+		.mod_article.grid8  { width:853px; }
+		.mod_article.grid9  { width:960px; }
+		.mod_article.grid10 { width:1066px; }
+		.mod_article.grid11 { width:1173px; }
+		.mod_article.grid12 { width:1280px; }
+
+		/**
+		 * Reduce the offset widths
+		 */
+		.offset1  { margin-left:116px  !important; }
+		.offset2  { margin-left:223px !important; }
+		.offset3  { margin-left:330px !important; }
+		.offset4  { margin-left:436px !important; }
+		.offset5  { margin-left:543px !important; }
+		.offset6  { margin-left:650px !important; }
+		.offset7  { margin-left:756px !important; }
+		.offset8  { margin-left:863px !important; }
+		.offset9  { margin-left:970px !important; }
+		.offset10 { margin-left:1076px !important; }
+		.offset11 { margin-left:1183px !important; }
+		.offset12 { margin-left:1290px !important; }
+
+		/**
+		 * Floated articles do not have margin
+		 */
+		.mod_article.offset1  { margin-left:106px  !important; }
+		.mod_article.offset2  { margin-left:213px !important; }
+		.mod_article.offset3  { margin-left:320px !important; }
+		.mod_article.offset4  { margin-left:426px !important; }
+		.mod_article.offset5  { margin-left:533px !important; }
+		.mod_article.offset6  { margin-left:640px !important; }
+		.mod_article.offset7  { margin-left:746px !important; }
+		.mod_article.offset8  { margin-left:853px !important; }
+		.mod_article.offset9  { margin-left:960px !important; }
+		.mod_article.offset10 { margin-left:1066px !important; }
+		.mod_article.offset11 { margin-left:1173px !important; }
+		.mod_article.offset12 { margin-left:1280px !important; }
 	}
-
-	/**
-	 * Reduce the grid column widths
-	 */
-	.grid1  { width:86px;  }
-	.grid2  { width:193px; }
-	.grid3  { width:300px; }
-	.grid4  { width:406px; }
-	.grid5  { width:513px; }
-	.grid6  { width:620px; }
-	.grid7  { width:726px; }
-	.grid8  { width:833px; }
-	.grid9  { width:940px; }
-	.grid10 { width:1046px; }
-	.grid11 { width:1153px; }
-	.grid12 { width:1260px; }
-
-	/**
-	 * Floated articles can be 20 pixel wider (no margin)
-	 */
-	.mod_article.grid1  { width:106px;  }
-	.mod_article.grid2  { width:213px; }
-	.mod_article.grid3  { width:320px; }
-	.mod_article.grid4  { width:426px; }
-	.mod_article.grid5  { width:533px; }
-	.mod_article.grid6  { width:640px; }
-	.mod_article.grid7  { width:746px; }
-	.mod_article.grid8  { width:853px; }
-	.mod_article.grid9  { width:960px; }
-	.mod_article.grid10 { width:1066px; }
-	.mod_article.grid11 { width:1173px; }
-	.mod_article.grid12 { width:1280px; }
-
-	/**
-	 * Reduce the offset widths
-	 */
-	.offset1  { margin-left:116px  !important; }
-	.offset2  { margin-left:223px !important; }
-	.offset3  { margin-left:330px !important; }
-	.offset4  { margin-left:436px !important; }
-	.offset5  { margin-left:543px !important; }
-	.offset6  { margin-left:650px !important; }
-	.offset7  { margin-left:756px !important; }
-	.offset8  { margin-left:863px !important; }
-	.offset9  { margin-left:970px !important; }
-	.offset10 { margin-left:1076px !important; }
-	.offset11 { margin-left:1183px !important; }
-	.offset12 { margin-left:1290px !important; }
-
-	/**
-	 * Floated articles do not have margin
-	 */
-	.mod_article.offset1  { margin-left:106px  !important; }
-	.mod_article.offset2  { margin-left:213px !important; }
-	.mod_article.offset3  { margin-left:320px !important; }
-	.mod_article.offset4  { margin-left:426px !important; }
-	.mod_article.offset5  { margin-left:533px !important; }
-	.mod_article.offset6  { margin-left:640px !important; }
-	.mod_article.offset7  { margin-left:746px !important; }
-	.mod_article.offset8  { margin-left:853px !important; }
-	.mod_article.offset9  { margin-left:960px !important; }
-	.mod_article.offset10 { margin-left:1066px !important; }
-	.mod_article.offset11 { margin-left:1173px !important; }
-	.mod_article.offset12 { margin-left:1280px !important; }
 }
 
 
