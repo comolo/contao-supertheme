@@ -150,7 +150,12 @@ abstract class AssetGenerator extends \Controller
      */
     public function isProductiveMode()
     {
-        // Todo: Backend setting to force supertheme dev mode
-        return !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+		// check symfony mode
+        $symfonyMode = !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+
+		// check supertheme settings
+		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode']) ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode'] : false;
+
+		return ($symfonyMode && $superThemeMode);
     }
 }
