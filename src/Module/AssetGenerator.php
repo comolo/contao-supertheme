@@ -16,6 +16,8 @@
 
 namespace Comolo\SuperThemeBundle\Module;
 
+use MatthiasMullie\Minify;
+
 /**
  * Class AssetGenerator.
  *
@@ -27,8 +29,6 @@ abstract class AssetGenerator extends \Controller
     protected $pageModel;
     protected $layoutModel;
     protected $pageRegular;
-    protected $yui_path = false;
-    protected $yuiCompressor = false;
 
     public function __construct()
     {
@@ -70,29 +70,28 @@ abstract class AssetGenerator extends \Controller
         }
     }
 
-    protected function compressAsset($filePath)
+    protected function writeAndCompressAsset($filePath, $strContent)
     {
-        // check if enabled
-        if ($this->yuiCompressor == false) {
-            return;
+		// Map file extensions to compressors
+		$fileCompressor = [
+			'css' => 'Minify\CSS',
+			'js' => 'Minify\JS',
+		];
+
+		// Get file extension
+		$fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+		// todo: check if caching is enabled
+		$caching = true;
+
+        // Caching disabled or unknown file extension
+        if (!isset($fileCompressor[$fileExtension]) || !$caching) {
+			return file_put_contents($filePath, $strContent);
         }
 
-        // Get Yiu Path
-        $yuiPath = $this->yui_path ? $this->yui_path : trim(`which yui-compressor`);
-
-        if (empty($yuiPath) || !$yuiPath) {
-            return false;
-        }
-
-        $options = array(
-            escapeshellarg($filePath),
-            '-o '.escapeshellarg($filePath),
-            '--charset "utf-8"',
-            '-v',
-        );
-
-        $cmd = $yuiPath.' '.implode(' ', $options);
-        `$cmd`;
+		$compressor = new $fileCompressor[$fileExtension];
+		$compressor->add($strContent);
+		$compressor->minify($filePath);
 
         return true;
     }
