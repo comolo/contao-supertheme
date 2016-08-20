@@ -1,19 +1,22 @@
 <?php
 
 /**
- * Class scssc
+ * Class scssc.
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  */
 
 /**
- * Namespace
+ * Namespace.
  */
-namespace SuperTheme;
 
-class scssc extends \scssc
+namespace Comolo\SuperThemeBundle\Helper;
+
+use Comolo\ScssCompass\CompassPlugin;
+use Leafo\ScssPhp\Compiler;
+
+class ScssCompiler extends Compiler
 {
     protected $importedStylesheets = array();
 
@@ -30,13 +33,18 @@ class scssc extends \scssc
     {
         return $this->importedStylesheets;
     }
-	
-	protected function removeTlPath($path)
-	{
-		if (substr($path, 0, strlen(TL_ROOT)) == TL_ROOT) {
-		    $path = substr($path, strlen(TL_ROOT));
-		}
-		
-		return $path;
-	}
+    
+    public function addPlugins() {
+        new CompassPlugin($this);
+        $this->addImportPath(__DIR__ . '/../Resources/scss/');
+    }
+
+    protected function removeTlPath($path)
+    {
+        if (substr($path, 0, strlen(TL_ROOT)) == TL_ROOT) {
+            $path = substr($path, strlen(TL_ROOT));
+        }
+
+        return $path;
+    }
 }

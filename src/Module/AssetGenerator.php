@@ -1,25 +1,24 @@
 <?php
 
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (C) 2005-2013 Leo Feyer
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * @copyright 2015 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @license   LGPL
  */
 
 /**
- * Namespace
+ * Namespace.
  */
-namespace SuperTheme;
+
+namespace Comolo\SuperThemeBundle\Module;
 
 /**
- * Class AssetGenerator
+ * Class AssetGenerator.
  *
- * @package   SuperTheme
  * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
  */
@@ -45,16 +44,16 @@ abstract class AssetGenerator extends \Controller
         //
         $arrFileIds = $this->filesCollector();
 
-        if (count($arrFileIds)>0) {
+        if (count($arrFileIds) > 0) {
             // fetch file path
             // contao 3.2 compability
-            if (method_exists($this->FilesModel,'findMultipleByUuids')) {
+            if (method_exists($this->FilesModel, 'findMultipleByUuids')) {
                 $arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
             } else {
                 $arrFiles = $this->FilesModel->findMultipleByIds($arrFileIds);
             }
 
-            if (is_object($arrFiles) && $arrFiles->count()>0) {
+            if (is_object($arrFiles) && $arrFiles->count() > 0) {
                 $arrFilePaths = $arrFiles->fetchEach('path');
                 $combiner = new \Combiner();
 
@@ -89,7 +88,7 @@ abstract class AssetGenerator extends \Controller
             escapeshellarg($filePath),
             '-o '.escapeshellarg($filePath),
             '--charset "utf-8"',
-            '-v'
+            '-v',
         );
 
         $cmd = $yuiPath.' '.implode(' ', $options);
@@ -144,5 +143,19 @@ abstract class AssetGenerator extends \Controller
         }
 
         return $arrVales;
+    }
+
+    /**
+     * check if contao is running in prod mode.
+     */
+    public function isProductiveMode()
+    {
+		// check symfony mode
+        $symfonyMode = !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+
+		// check supertheme settings
+		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode']) ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode'] : false;
+
+		return ($symfonyMode && $superThemeMode);
     }
 }
