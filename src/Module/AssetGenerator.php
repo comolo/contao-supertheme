@@ -16,8 +16,6 @@
 
 namespace Comolo\SuperThemeBundle\Module;
 
-use MatthiasMullie\Minify;
-
 /**
  * Class AssetGenerator.
  *
@@ -40,18 +38,11 @@ abstract class AssetGenerator extends \Controller
         $this->pageModel = $page;
         $this->layoutModel = $layout;
         $this->pageRegular = $pageRegular;
-
-        //
         $arrFileIds = $this->filesCollector();
 
         if (count($arrFileIds) > 0) {
-            // fetch file path
-            // contao 3.2 compability
-            if (method_exists($this->FilesModel, 'findMultipleByUuids')) {
-                $arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
-            } else {
-                $arrFiles = $this->FilesModel->findMultipleByIds($arrFileIds);
-            }
+            $arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
+
 
             if (is_object($arrFiles) && $arrFiles->count() > 0) {
                 $arrFilePaths = $arrFiles->fetchEach('path');
@@ -73,10 +64,10 @@ abstract class AssetGenerator extends \Controller
     protected function writeAndCompressAsset($filePath, $strContent)
     {
 		// Map file extensions to compressors
-		$fileCompressor = [
-			'css' => 'Minify\CSS',
-			'js' => 'Minify\JS',
-		];
+        $fileCompressor = [
+            'css' => '\MatthiasMullie\Minify\CSS',
+            'js' => '\MatthiasMullie\Minify\JS',
+        ];
 
 		// Get file extension
 		$fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
