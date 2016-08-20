@@ -72,22 +72,20 @@ abstract class AssetGenerator extends \Controller
 		// Get file extension
 		$fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
 
-		// todo: check if caching is enabled
-		$caching = true;
-
         // Caching disabled or unknown file extension
-        if (!isset($fileCompressor[$fileExtension]) || !$caching) {
+        if (!isset($fileCompressor[$fileExtension]) || !$this->isMinifyEnabled()) {
 			return file_put_contents($filePath, $strContent);
         }
 
 		$compressor = new $fileCompressor[$fileExtension];
 		$compressor->add($strContent);
-		$compressor->minify($filePath);
 
-        return true;
+		return $compressor->minify($filePath);
     }
 
-    // helper function
+    /**
+	 * Helper function, combine two arrays
+	 */
     protected function combineArrayValues($arr1, $arr2)
     {
         $array = array();
@@ -138,14 +136,23 @@ abstract class AssetGenerator extends \Controller
     /**
      * check if contao is running in prod mode.
      */
-    public function isProductiveMode()
+    protected function isProductiveMode()
     {
-		// check symfony mode
         $symfonyMode = !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
-
-		// check supertheme settings
-		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode']) ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode'] : false;
+		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
+			? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
+			: false;
 
 		return ($symfonyMode && $superThemeMode);
     }
+
+	/**
+	 * check if minify is enabled
+	 */
+	protected function isMinifyEnabled()
+	{
+		return isset($GLOBALS['TL_CONFIG']['superthemeMinify'])
+			? $GLOBALS['TL_CONFIG']['superthemeMinify']
+			: false;
+	}
 }
