@@ -11,7 +11,7 @@
  */
 
 $GLOBALS['TL_LANG']['tl_settings']['superthemeProductiveMode'] = [
-	'Produktiver Modus einschalten',
+	'Produktivmodus einschalten',
 	'Deaktiviert bei scss das Prüfen auf geänderte Import-Dateien'
 ];
 $GLOBALS['TL_LANG']['tl_settings']['superthemeMinify'] = [

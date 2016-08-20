@@ -26,5 +26,5 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['superthemeProductiveMode'] = [
 $GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = str_replace(
 	'{global_legend',
 	'{supertheme_legend},superthemeMinify,superthemeProductiveMode;{global_legend',
-	$GLOBALS['TL_DCA']['tl_settings']['palettes']
+	$GLOBALS['TL_DCA']['tl_settings']['palettes']['default']
 );
