@@ -14,7 +14,6 @@
 	],
 	"require": {
         "php":">=5.4.0",
-        "symfony/framework-bundle": "~2.7",
         "contao/core-bundle": ">=4.0,<5.0",
         "leafo/scssphp": "~0.1",
         "comolo/php-scssphp-compass": "~0.1",
