@@ -138,7 +138,7 @@
 $grid-large-screen: true !default;
 
 @if $grid-large-screen == true {
-	@media (min-width:1380px)
+	@media (min-width:1440px)
 	{
 		/**
 		 * Reduce the overall width
