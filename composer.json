@@ -1,7 +1,7 @@
 {
 	"name":"comolo/contao-supertheme",
     "type": "symfony-bundle",
-	"description":"SuperTheme is a Contao 3 module to easily add assets to a page layout.",
+	"description":"SuperTheme is a Contao module to easily add assets to a page layout.",
 	"keywords":["contao","theme", "supertheme"],
 	"homepage":"https://github.com/comolo/contao-supertheme",
 	"license":"LGPL-3.0+",
