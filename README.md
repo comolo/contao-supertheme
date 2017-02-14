@@ -11,7 +11,7 @@ SuperTheme is a Contao module to add SCSS, JS, CoffeeScript to a page layout eas
 **Step 1:**
 ```bash
 cd contao_4; # Your Contao 4 root directory 
-composer.phar require comolo/contao-supertheme:dev-contao4
+composer.phar require comolo/contao-supertheme
 ```
 
 **Step 2:**
