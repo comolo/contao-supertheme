@@ -27,8 +27,6 @@ abstract class AssetGenerator extends \Controller
     protected $pageModel;
     protected $layoutModel;
     protected $pageRegular;
-    protected $yui_path = false;
-    protected $yuiCompressor = false;
 
     public function __construct()
     {
@@ -40,18 +38,11 @@ abstract class AssetGenerator extends \Controller
         $this->pageModel = $page;
         $this->layoutModel = $layout;
         $this->pageRegular = $pageRegular;
-
-        //
         $arrFileIds = $this->filesCollector();
 
         if (count($arrFileIds) > 0) {
-            // fetch file path
-            // contao 3.2 compability
-            if (method_exists($this->FilesModel, 'findMultipleByUuids')) {
-                $arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
-            } else {
-                $arrFiles = $this->FilesModel->findMultipleByIds($arrFileIds);
-            }
+            $arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
+
 
             if (is_object($arrFiles) && $arrFiles->count() > 0) {
                 $arrFilePaths = $arrFiles->fetchEach('path');
@@ -70,34 +61,31 @@ abstract class AssetGenerator extends \Controller
         }
     }
 
-    protected function compressAsset($filePath)
+    protected function writeAndCompressAsset($filePath, $strContent)
     {
-        // check if enabled
-        if ($this->yuiCompressor == false) {
-            return;
+		// Map file extensions to compressors
+        $fileCompressor = [
+            'css' => '\MatthiasMullie\Minify\CSS',
+            'js' => '\MatthiasMullie\Minify\JS',
+        ];
+
+		// Get file extension
+		$fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        // Caching disabled or unknown file extension
+        if (!isset($fileCompressor[$fileExtension]) || !$this->isMinifyEnabled()) {
+			return file_put_contents($filePath, $strContent);
         }
 
-        // Get Yiu Path
-        $yuiPath = $this->yui_path ? $this->yui_path : trim(`which yui-compressor`);
+		$compressor = new $fileCompressor[$fileExtension];
+		$compressor->add($strContent);
 
-        if (empty($yuiPath) || !$yuiPath) {
-            return false;
-        }
-
-        $options = array(
-            escapeshellarg($filePath),
-            '-o '.escapeshellarg($filePath),
-            '--charset "utf-8"',
-            '-v',
-        );
-
-        $cmd = $yuiPath.' '.implode(' ', $options);
-        `$cmd`;
-
-        return true;
+		return $compressor->minify($filePath);
     }
 
-    // helper function
+    /**
+	 * Helper function, combine two arrays
+	 */
     protected function combineArrayValues($arr1, $arr2)
     {
         $array = array();
@@ -148,14 +136,23 @@ abstract class AssetGenerator extends \Controller
     /**
      * check if contao is running in prod mode.
      */
-    public function isProductiveMode()
+    protected function isProductiveMode()
     {
-		// check symfony mode
         $symfonyMode = !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
-
-		// check supertheme settings
-		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode']) ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode'] : false;
+		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
+			? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
+			: false;
 
 		return ($symfonyMode && $superThemeMode);
     }
+
+	/**
+	 * check if minify is enabled
+	 */
+	protected function isMinifyEnabled()
+	{
+		return isset($GLOBALS['TL_CONFIG']['superthemeMinify'])
+			? $GLOBALS['TL_CONFIG']['superthemeMinify']
+			: false;
+	}
 }

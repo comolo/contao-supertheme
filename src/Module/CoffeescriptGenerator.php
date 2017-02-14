@@ -44,26 +44,26 @@ class CoffeescriptGenerator extends AssetGenerator
 
     protected function assetCompiler($strSourcePath)
     {
-        // Javascript File - No compilation required
-        if (substr($strSourcePath, -7) != '.coffee') {
-            return array($strSourcePath, md5_file(TL_ROOT.'/'.$strSourcePath));
-        }
-
         // Target File
-        $strJSFile = 'assets/js/coffee-'.md5_file($strSourcePath).'.js';
+        $strJSFile = 'assets/js/js-'.md5_file($strSourcePath).'.js';
 
         if (!file_exists(TL_ROOT.'/'.$strJSFile)) {
 
-            // require classes
-            CoffeeScriptInit::load();
+            $strJs = '';
 
-            // Compile
-            $strCoffee = file_get_contents($strSourcePath);
-            $strJs = CoffeeScriptCompiler::compile($strCoffee, array('filename' => $strSourcePath));
+            if (substr($strSourcePath, -7) != '.coffee') {
+                $strJs = file_get_contents(TL_ROOT.'/'.$strSourcePath);
+            }
+            else {
+                // require classes
+                CoffeeScriptInit::load();
 
-            // write css file / replace with contao framework method later
-            file_put_contents(TL_ROOT.'/'.$strJSFile, $strJs);
-            $this->compressAsset(TL_ROOT.'/'.$strJSFile);
+                // Compile
+                $strCoffee = file_get_contents($strSourcePath);
+                $strJs = CoffeeScriptCompiler::compile($strCoffee, array('filename' => $strSourcePath));
+            }
+
+            $this->writeAndCompressAsset(TL_ROOT.'/'.$strJSFile, $strJs);
         }
 
         return array($strJSFile, null);

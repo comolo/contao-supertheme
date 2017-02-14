@@ -44,16 +44,16 @@ class ScssGenerator extends AssetGenerator
             $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
             if (!$strCacheVersion) {
-                
+
                 $scss = new ScssCompiler();
                 $scss->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
-                
+
                 // Import Paths
                 self::addScssNamespace(array(
                     ''	=> dirname($strSourcePath) . '/'
                 ));
                 $scssImportNamespaces = self::$scssNamespaces;
-                
+
                 $scss->addImportPath(function ($filePath) use ($scssImportNamespaces) {
                     foreach ($scssImportNamespaces as $namespace => $scssFolder) {
                         if (
@@ -87,8 +87,7 @@ class ScssGenerator extends AssetGenerator
                 $strCssContent = $scss->compile(file_get_contents(TL_ROOT.'/'.$strSourcePath));
 
                 // write css file
-                file_put_contents(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
-                $this->compressAsset(TL_ROOT.'/'.$strCssFilePath);
+                $this->writeAndCompressAsset(TL_ROOT.'/'.$strCssFilePath, $strCssContent);
 
                 // cache
                 $strCacheVersion = $this->generateCache($strSourcePath, $strCssFilePath, $scss->getImportedStylesheets());
@@ -112,7 +111,7 @@ class ScssGenerator extends AssetGenerator
     }
 
     // Cache methods
-    //    
+    //
     public function checkCached($strSourcePath, $strNewPath)
     {
         $cacheFile = $strNewPath.'.cache';
@@ -134,7 +133,7 @@ class ScssGenerator extends AssetGenerator
                 //files are the same
                 return $strHash;
             }
-            
+
             // files changed
             return false;
         }
@@ -168,7 +167,7 @@ class ScssGenerator extends AssetGenerator
 
         return $strHash;
     }
-    
+
     public static function addScssNamespace($arrMapping)
     {
         foreach ($arrMapping as $namespace => $scssFolder) {
