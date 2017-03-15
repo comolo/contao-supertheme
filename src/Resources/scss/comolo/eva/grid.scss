@@ -10,10 +10,13 @@
 /**
  * Make the wrapping container 960 pixel wide
  */
-.wrapper-element {
+.wrapper-element,
+.wrapper__element {
 	position:relative;
 }
-#wrapper, .wrapper-element {
+#wrapper,
+.wrapper-element,
+.wrapper__element {
 	width:960px;
 	margin:0 auto;
 }
@@ -143,7 +146,9 @@ $grid-large-screen: true !default;
 		/**
 		 * Reduce the overall width
 		 */
-		#wrapper, .wrapper-element {
+		#wrapper,
+		.wrapper-element,
+		.wrapper__element {
 			width:1280px;
 		}
 
@@ -224,7 +229,9 @@ $grid-large-screen: true !default;
 	/**
 	 * Reduce the overall width
 	 */
-	#wrapper, .wrapper-element {
+	#wrapper,
+	.wrapper-element,
+	.wrapper__element {
 		width:744px;
 	}
 
@@ -328,7 +335,9 @@ $grid-large-screen: true !default;
 	/**
 	 * Remove the overall width
 	 */
-	#wrapper, .wrapper-element {
+	#wrapper,
+	.wrapper-element,
+	.wrapper__element {
 		width:auto;
 	}
 
