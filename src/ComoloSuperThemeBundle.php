@@ -1,15 +1,13 @@
 <?php
-
-/**
+/*
  * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2013-2015 Hendrik Obermayer
+ * Copyright (C) 2017 Comolo GmbH
  *
- * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- * @copyright 2015 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * @author    Hendrik Obermayer <https://github.com/henobi>
+ * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
-
 namespace Comolo\SuperThemeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

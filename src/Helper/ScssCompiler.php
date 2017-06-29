@@ -1,21 +1,22 @@
 <?php
-
-/**
- * Class scssc.
+/*
+ * This file is part of the SuperTheme extension by Comolo.
  *
- * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- * @copyright 2014 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * Copyright (C) 2017 Comolo GmbH
+ *
+ * @author    Hendrik Obermayer <https://github.com/henobi>
+ * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
+ * @license   LGPL
  */
-
-/**
- * Namespace.
- */
-
 namespace Comolo\SuperThemeBundle\Helper;
 
 use Comolo\ScssCompass\CompassPlugin;
 use Leafo\ScssPhp\Compiler;
 
+/**
+ * Class ScssCompiler
+ * @author    Hendrik Obermayer <https://github.com/henobi>
+ */
 class ScssCompiler extends Compiler
 {
     protected $importedStylesheets = array();

@@ -1,3 +1,2 @@
-.DS_Store
-system/modules/theme_external_js/vendor/leafo/scssphp/tests 
-system/modules/theme_external_js/vendor/leafo/scssphp/site 
+/composer.lock
+/vendor/

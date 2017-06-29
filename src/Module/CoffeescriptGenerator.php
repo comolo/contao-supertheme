@@ -1,19 +1,13 @@
 <?php
-
-/**
- * Contao Open Source CMS.
+/*
+ * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2005-2013 Leo Feyer
+ * Copyright (C) 2017 Comolo GmbH
  *
- * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
- * @copyright 2015 - Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * @author    Hendrik Obermayer <https://github.com/henobi>
+ * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
-
-/**
- * Namespace.
- */
-
 namespace Comolo\SuperThemeBundle\Module;
 
 use CoffeeScript\Compiler as CoffeeScriptCompiler;
@@ -22,8 +16,7 @@ use CoffeeScript\Init as CoffeeScriptInit;
 /**
  * Class GenerateCoffeescript.
  *
- * @author    Hendrik Obermayer - Comolo Comolo GmbH <mail@comolo.de>
- * @copyright 2014 - Hendrik Obermayer - Comolo Comolo GmbH <mail@comolo.de>
+ * @author    Hendrik Obermayer <https://github.com/henobi>
  */
 class CoffeescriptGenerator extends AssetGenerator
 {
