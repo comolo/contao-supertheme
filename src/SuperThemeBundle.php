@@ -15,8 +15,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Configures the SuperTheme bundle.
  *
- * @author    Hendrik Obermayer - Comolo GmbH <mail@comolo.de>
+ * @author Hendrik Obermayer <https://github.com/henobi>
  */
-class ComoloSuperThemeBundle extends Bundle
+class SuperThemeBundle extends Bundle
 {
 }
