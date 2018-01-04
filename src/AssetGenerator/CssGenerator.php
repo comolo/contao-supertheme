@@ -2,30 +2,29 @@
 /*
  * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2017 Comolo GmbH
+ * Copyright (C) 2018 Comolo GmbH
  *
  * @author    Hendrik Obermayer <https://github.com/henobi>
- * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
+ * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
-namespace Comolo\SuperThemeBundle\Module;
+namespace Comolo\SuperThemeBundle\AssetGenerator;
 
-use Comolo\SuperThemeBundle\Helper\ScssCompiler;
+use Comolo\SuperThemeBundle\Compiler\ScssCompiler;
 
 /**
- * Class ScssGenerator.
- *
- * @author    Hendrik Obermayer <https://github.com/henobi>
+ * Class CssGenerator
+ * @package Comolo\SuperThemeBundle\AssetGenerator
  */
-class ScssGenerator extends AssetGenerator
+class CssGenerator extends AssetGenerator
 {
     protected static $scssNamespaces = array();
 
     protected function filesCollector()
     {
         return $this->sortArrayValues(
-            (array) unserialize($this->layoutModel->external_scss),
-            $this->layoutModel->external_scss_order
+            unserialize($this->layoutModel->external_scss),
+            unserialize($this->layoutModel->external_scss_order)
         );
     }
 
@@ -34,7 +33,7 @@ class ScssGenerator extends AssetGenerator
         $strCssFilePath = '/assets/css/'.md5($strSourcePath.md5_file(TL_ROOT.'/'.$strSourcePath)).'.css';
         $fileExists = file_exists(TL_ROOT.'/'.$strCssFilePath);
 
-        if (!$fileExists || !$this->isProductiveMode()) {
+        if (!$fileExists || !$this->isProductiveModeEnabled()) {
             $strCacheVersion = $this->checkCached($strSourcePath, $strCssFilePath);
 
             if (!$strCacheVersion) {
@@ -91,7 +90,7 @@ class ScssGenerator extends AssetGenerator
         return array($strCssFilePath, $strCacheVersion ? $strCacheVersion : null);
     }
 
-    protected function addAssetToPage($filePath)
+    protected function addAssetToPage(string $filePath)
     {
         $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="'.$filePath.'">';
     }

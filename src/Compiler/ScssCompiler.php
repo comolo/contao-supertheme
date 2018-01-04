@@ -2,32 +2,31 @@
 /*
  * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2017 Comolo GmbH
+ * Copyright (C) 2018 Comolo GmbH
  *
  * @author    Hendrik Obermayer <https://github.com/henobi>
- * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
+ * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
-namespace Comolo\SuperThemeBundle\Helper;
+namespace Comolo\SuperThemeBundle\Compiler;
 
 use Comolo\ScssCompass\CompassPlugin;
 use Leafo\ScssPhp\Compiler;
 
 /**
  * Class ScssCompiler
- * @author    Hendrik Obermayer <https://github.com/henobi>
+ * @package Comolo\SuperThemeBundle\Helper
  */
 class ScssCompiler extends Compiler
 {
     protected $importedStylesheets = array();
 
-    // overwrite method to get the impoted files
+    // overwrite method to get the imported files
     protected function importFile($path, $out)
     {
         $this->importedStylesheets[] = $this->removeTlPath($path);
 
-        // call "original" method
-        return parent::importFile($path, $out);
+        parent::importFile($path, $out);
     }
 
     public function getImportedStylesheets()
@@ -35,7 +34,8 @@ class ScssCompiler extends Compiler
         return $this->importedStylesheets;
     }
     
-    public function addPlugins() {
+    public function addPlugins()
+    {
         new CompassPlugin($this);
         $this->addImportPath(__DIR__ . '/../Resources/scss/');
     }

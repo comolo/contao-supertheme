@@ -1,13 +1,12 @@
 <?php
-
-/**
- * Contao Open Source CMS.
+/*
+ * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2005-2013 Leo Feyer
+ * Copyright (C) 2018 Comolo GmbH
  *
- * @author    Hendrik Obermayer - Comolo GmbH
+ * @author    Hendrik Obermayer <https://github.com/henobi>
+ * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
- * @copyright Hendrik Obermayer - Comolo GmbH
  */
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('\Comolo\SuperThemeBundle\Module\ScssGenerator', 'generate');
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('\Comolo\SuperThemeBundle\Module\CoffeescriptGenerator', 'generate');
+$GLOBALS['TL_HOOKS']['generatePage'][] = [\Comolo\SuperThemeBundle\AssetGenerator\CssGenerator::class, 'generate'];
+$GLOBALS['TL_HOOKS']['generatePage'][] = [\Comolo\SuperThemeBundle\AssetGenerator\JavascriptGenerator::class, 'generate'];

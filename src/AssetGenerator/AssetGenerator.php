@@ -2,18 +2,19 @@
 /*
  * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2017 Comolo GmbH
+ * Copyright (C) 2018 Comolo GmbH
  *
  * @author    Hendrik Obermayer <https://github.com/henobi>
- * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
+ * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
-namespace Comolo\SuperThemeBundle\Module;
+namespace Comolo\SuperThemeBundle\AssetGenerator;
+
+use \Contao\System;
 
 /**
- * Class AssetGenerator.
- *
- * @author    Hendrik Obermayer <https://github.com/henobi>
+ * Class AssetGenerator
+ * @package Comolo\SuperThemeBundle\AssetGenerator
  */
 abstract class AssetGenerator extends \Controller
 {
@@ -21,10 +22,11 @@ abstract class AssetGenerator extends \Controller
     protected $layoutModel;
     protected $pageRegular;
 
-    public function __construct()
-    {
-        $this->import('FilesModel');
-    }
+    protected abstract function filesCollector();
+
+    protected abstract function addAssetToPage(string $filePath);
+
+    protected abstract function assetCompiler($strSourcePath);
 
     public function generate(\PageModel $page, \LayoutModel $layout, \PageRegular $pageRegular)
     {
@@ -34,8 +36,7 @@ abstract class AssetGenerator extends \Controller
         $arrFileIds = $this->filesCollector();
 
         if (count($arrFileIds) > 0) {
-            $arrFiles = $this->FilesModel->findMultipleByUuids($arrFileIds);
-
+            $arrFiles = \FilesModel::findMultipleByUuids($arrFileIds);
 
             if (is_object($arrFiles) && $arrFiles->count() > 0) {
                 $arrFilePaths = $arrFiles->fetchEach('path');
@@ -48,7 +49,6 @@ abstract class AssetGenerator extends \Controller
                     $combiner->add($fileData[0], $fileData[1]); // filePath, version
                 }
 
-                // add to page
                 $this->addAssetToPage($combiner->getCombinedFile());
             }
         }
@@ -58,8 +58,8 @@ abstract class AssetGenerator extends \Controller
     {
 		// Map file extensions to compressors
         $fileCompressor = [
-            'css' => '\MatthiasMullie\Minify\CSS',
-            'js' => '\MatthiasMullie\Minify\JS',
+            'css' => \MatthiasMullie\Minify\CSS::class,
+            'js' => \MatthiasMullie\Minify\JS::class,
         ];
 
 		// Get file extension
@@ -70,48 +70,23 @@ abstract class AssetGenerator extends \Controller
 			return file_put_contents($filePath, $strContent);
         }
 
+        /** @var \MatthiasMullie\Minify\CSS|\MatthiasMullie\Minify\JS $compressor */
 		$compressor = new $fileCompressor[$fileExtension];
 		$compressor->add($strContent);
 
 		return $compressor->minify($filePath);
     }
 
-    /**
-	 * Helper function, combine two arrays
-	 */
-    protected function combineArrayValues($arr1, $arr2)
+    protected function sortArrayValues($arrValues, $arrTmpOrder)
     {
-        $array = array();
+        if (!empty($arrTmpOrder) && is_array($arrTmpOrder)) {
 
-        foreach ($arr1 as $key => $value) {
-            $array[] = $value;
-        }
-
-        foreach ($arr2 as $key => $value) {
-            $array[] = $value;
-        }
-
-        return $array;
-    }
-
-    // sorting
-    protected function sortArrayValues($arrVales, $strOrder)
-    {
-        /*
-         * Notice: Sorting-Code extracted from Contao Core: page/PageRegular.php
-         *
-         */
-
-        if ($strOrder != '') {
-            // Turn the order string into an array and remove all values
-            $arrOrder = explode(',', $strOrder);
-            $arrOrder = array_flip(array_map('intval', $arrOrder));
-            $arrOrder = array_map(function () {}, $arrOrder);
+            $arrOrder = array_map(function(){}, array_flip($arrTmpOrder));
 
             // Move the matching elements to their position in $arrOrder
-            foreach ($arrVales as $k => $v) {
+            foreach ($arrValues as $k => $v) {
                 $arrOrder[$v] = $v;
-                unset($arrVales[$k]);
+                unset($arrValues[$k]);
             }
 
             // Append the left-over style sheets at the end
@@ -119,19 +94,19 @@ abstract class AssetGenerator extends \Controller
                 $arrOrder = array_merge($arrOrder, array_values($arrVales));
             }
 
-            // Remove empty (unreplaced) entries
-            $arrVales = array_filter($arrOrder);
+            // Remove empty entries
+            $arrValues = array_filter($arrOrder);
         }
 
-        return $arrVales;
+        return array_values($arrValues);
     }
 
     /**
      * check if contao is running in prod mode.
      */
-    protected function isProductiveMode()
+    protected function isProductiveModeEnabled()
     {
-        $symfonyMode = !in_array(\System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+        $symfonyMode = !in_array(System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
 		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
 			? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
 			: false;

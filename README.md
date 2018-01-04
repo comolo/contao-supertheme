@@ -9,7 +9,6 @@ SuperTheme is a Contao module to add SCSS, JS, CoffeeScript to a page layout eas
 ## Installation
 
 ### 1. Install with composer
-All you need to do is to run:
 
 ```bash
 composer require comolo/contao-supertheme

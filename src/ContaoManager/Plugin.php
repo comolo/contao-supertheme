@@ -2,10 +2,10 @@
 /*
  * This file is part of the SuperTheme extension by Comolo.
  *
- * Copyright (C) 2017 Comolo GmbH
+ * Copyright (C) 2018 Comolo GmbH
  *
  * @author    Hendrik Obermayer <https://github.com/henobi>
- * @copyright 2017 Comolo GmbH <https://www.comolo.de/>
+ * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
 namespace Comolo\SuperThemeBundle\ContaoManager;
@@ -17,9 +17,8 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Comolo\SuperThemeBundle\SuperThemeBundle;
 
 /**
- * Plugin for the Contao Manager.
- *
- * @author Hendrik Obermayer <https://github.com/henobi>
+ * Class Plugin
+ * @package Comolo\SuperThemeBundle\ContaoManager
  */
 class Plugin implements BundlePluginInterface
 {
