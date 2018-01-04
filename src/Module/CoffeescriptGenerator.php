@@ -38,7 +38,7 @@ class CoffeescriptGenerator extends AssetGenerator
     protected function assetCompiler($strSourcePath)
     {
         // Target File
-        $strJSFile = 'assets/js/js-'.md5_file($strSourcePath).'.js';
+        $strJSFile = 'assets/js/js-'.md5_file(TL_ROOT.'/'.$strSourcePath).'.js';
 
         if (!file_exists(TL_ROOT.'/'.$strJSFile)) {
 
