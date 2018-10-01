@@ -8,8 +8,10 @@
  * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
+
 namespace Comolo\SuperThemeBundle\AssetGenerator;
 
+use Contao\FilesModel;
 use \Contao\System;
 
 /**
@@ -21,12 +23,6 @@ abstract class AssetGenerator extends \Controller
     protected $pageModel;
     protected $layoutModel;
     protected $pageRegular;
-
-    protected abstract function filesCollector();
-
-    protected abstract function addAssetToPage(string $filePath);
-
-    protected abstract function assetCompiler($strSourcePath);
 
     public function generate(\PageModel $page, \LayoutModel $layout, \PageRegular $pageRegular)
     {
@@ -54,27 +50,44 @@ abstract class AssetGenerator extends \Controller
         }
     }
 
+    protected abstract function filesCollector();
+
+    protected abstract function assetCompiler($strSourcePath);
+
+    protected abstract function addAssetToPage(string $filePath);
+
     protected function writeAndCompressAsset($filePath, $strContent)
     {
-		// Map file extensions to compressors
+        // Map file extensions to compressors
         $fileCompressor = [
             'css' => \MatthiasMullie\Minify\CSS::class,
             'js' => \MatthiasMullie\Minify\JS::class,
         ];
 
-		// Get file extension
-		$fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+        // Get file extension
+        $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
 
         // Caching disabled or unknown file extension
         if (!isset($fileCompressor[$fileExtension]) || !$this->isMinifyEnabled()) {
-			return file_put_contents($filePath, $strContent);
+            return file_put_contents($filePath, $strContent);
         }
 
         /** @var \MatthiasMullie\Minify\CSS|\MatthiasMullie\Minify\JS $compressor */
-		$compressor = new $fileCompressor[$fileExtension];
-		$compressor->add($strContent);
+        $compressor = new $fileCompressor[$fileExtension];
+        $compressor->add($strContent);
 
-		return $compressor->minify($filePath);
+        return $compressor->minify($filePath);
+    }
+
+    /**
+     * check if minify is enabled
+     */
+    protected function isMinifyEnabled()
+    {
+        // TODO: use Config::get(..);
+        return isset($GLOBALS['TL_CONFIG']['superthemeMinify'])
+            ? $GLOBALS['TL_CONFIG']['superthemeMinify']
+            : false;
     }
 
     protected function sortArrayValues(array $arrValues, array $arrTmpOrder)
@@ -85,7 +98,8 @@ abstract class AssetGenerator extends \Controller
             return $arrValues;
         }
 
-        $arrOrder = array_map(function(){}, array_flip($arrTmpOrder));
+        $arrOrder = array_map(function () {
+        }, array_flip($arrTmpOrder));
 
         // Move the matching elements to their position in $arrOrder
         foreach ($arrValues as $k => $v) {
@@ -109,21 +123,12 @@ abstract class AssetGenerator extends \Controller
      */
     protected function isProductiveModeEnabled()
     {
+        // TODO: use Config::get(..);
         $symfonyMode = !in_array(System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
-		$superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
-			? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
-			: false;
+        $superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
+            ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
+            : false;
 
-		return ($symfonyMode && $superThemeMode);
+        return ($symfonyMode && $superThemeMode);
     }
-
-	/**
-	 * check if minify is enabled
-	 */
-	protected function isMinifyEnabled()
-	{
-		return isset($GLOBALS['TL_CONFIG']['superthemeMinify'])
-			? $GLOBALS['TL_CONFIG']['superthemeMinify']
-			: false;
-	}
 }

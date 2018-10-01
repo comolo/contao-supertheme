@@ -24,12 +24,12 @@ $GLOBALS['TL_DCA']['tl_layout']['fields']['external_js'] = array(
     'exclude' => true,
     'inputType' => 'fileTree',
     'eval' => array(
-                                    'multiple' => true,
-                                    'orderField' => 'external_js_order',
-                                    'fieldType' => 'checkbox',
-                                    'filesOnly' => true,
-                                    'extensions' => 'js,coffee',
-                                ),
+        'multiple' => true,
+        'orderField' => 'external_js_order',
+        'fieldType' => 'checkbox',
+        'filesOnly' => true,
+        'extensions' => 'js,coffee',
+    ),
     'sql' => 'blob NULL',
 );
 
@@ -38,12 +38,12 @@ $GLOBALS['TL_DCA']['tl_layout']['fields']['external_scss'] = array(
     'exclude' => true,
     'inputType' => 'fileTree',
     'eval' => array(
-                                    'multiple' => true,
-                                    'orderField' => 'external_scss_order',
-                                    'fieldType' => 'checkbox',
-                                    'filesOnly' => true,
-                                    'extensions' => 'scss,css',
-                                ),
+        'multiple' => true,
+        'orderField' => 'external_scss_order',
+        'fieldType' => 'checkbox',
+        'filesOnly' => true,
+        'extensions' => 'scss,css',
+    ),
     'sql' => 'blob NULL',
 );
 

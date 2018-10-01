@@ -8,6 +8,7 @@
  * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
+
 namespace Comolo\SuperThemeBundle\AssetGenerator;
 
 use CoffeeScript\Compiler as CoffeeScriptCompiler;
@@ -21,13 +22,13 @@ class JavascriptGenerator extends AssetGenerator
     protected function filesCollector()
     {
         $arrLayoutFiles = $this->sortArrayValues(
-            (array) unserialize($this->layoutModel->external_js),
-            (array) unserialize($this->layoutModel->external_js_order)
+            (array)unserialize($this->layoutModel->external_js),
+            (array)unserialize($this->layoutModel->external_js_order)
         );
 
         $arrPageFiles = $this->sortArrayValues(
-            (array) unserialize($this->pageModel->external_js),
-            (array) unserialize($this->pageModel->external_js_order)
+            (array)unserialize($this->pageModel->external_js),
+            (array)unserialize($this->pageModel->external_js_order)
         );
 
         return array_merge($arrLayoutFiles, $arrPageFiles);
@@ -36,22 +37,21 @@ class JavascriptGenerator extends AssetGenerator
     protected function assetCompiler($strSourcePath)
     {
         // Target File
-        $strJSFile = 'assets/js/js-'.md5_file(TL_ROOT.'/'.$strSourcePath).'.js';
+        $strJSFile = 'assets/js/js-' . md5_file(TL_ROOT . '/' . $strSourcePath) . '.js';
 
-        if (!file_exists(TL_ROOT.'/'.$strJSFile)) {
+        if (!file_exists(TL_ROOT . '/' . $strJSFile)) {
 
             $strJs = '';
 
             if (substr($strSourcePath, -7) != '.coffee') {
-                $strJs = file_get_contents(TL_ROOT.'/'.$strSourcePath);
-            }
-            else {
+                $strJs = file_get_contents(TL_ROOT . '/' . $strSourcePath);
+            } else {
                 // Compile
                 $strCoffee = file_get_contents($strSourcePath);
                 $strJs = CoffeeScriptCompiler::compile($strCoffee, array('filename' => $strSourcePath));
             }
 
-            $this->writeAndCompressAsset(TL_ROOT.'/'.$strJSFile, $strJs);
+            $this->writeAndCompressAsset(TL_ROOT . '/' . $strJSFile, $strJs);
         }
 
         return array($strJSFile, null);
@@ -59,6 +59,6 @@ class JavascriptGenerator extends AssetGenerator
 
     protected function addAssetToPage(string $filePath)
     {
-        $GLOBALS['TL_BODY'][] = '<script src="'.$filePath.'"></script>';
+        $GLOBALS['TL_BODY'][] = '<script src="' . $filePath . '"></script>';
     }
 }

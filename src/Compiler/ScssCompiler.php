@@ -8,6 +8,7 @@
  * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
+
 namespace Comolo\SuperThemeBundle\Compiler;
 
 use Comolo\ScssCompass\CompassPlugin;
@@ -22,22 +23,23 @@ class ScssCompiler extends Compiler
     protected $importedStylesheets = array();
 
     // overwrite method to get the imported files
-    protected function importFile($path, $out)
-    {
-        $this->importedStylesheets[] = $this->removeTlPath($path);
-
-        parent::importFile($path, $out);
-    }
 
     public function getImportedStylesheets()
     {
         return $this->importedStylesheets;
     }
-    
+
     public function addPlugins()
     {
         new CompassPlugin($this);
         $this->addImportPath(__DIR__ . '/../Resources/scss/');
+    }
+
+    protected function importFile($path, $out)
+    {
+        $this->importedStylesheets[] = $this->removeTlPath($path);
+
+        parent::importFile($path, $out);
     }
 
     protected function removeTlPath($path)

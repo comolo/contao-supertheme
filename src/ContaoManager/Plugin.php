@@ -8,6 +8,7 @@
  * @copyright 2018 Comolo GmbH <https://www.comolo.de/>
  * @license   LGPL
  */
+
 namespace Comolo\SuperThemeBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
