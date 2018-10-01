@@ -92,14 +92,16 @@ abstract class AssetGenerator extends \Controller
 
     protected function sortArrayValues(array $arrValues, array $arrTmpOrder)
     {
+        // Remove empty values (fixes #20)
+        $arrTmpOrder = array_filter($arrTmpOrder);
+
         // No order given
         if (empty($arrTmpOrder)) {
 
-            return $arrValues;
+            return array_filter($arrValues);
         }
 
-        $arrOrder = array_map(function () {
-        }, array_flip($arrTmpOrder));
+        $arrOrder = array_map(function () {}, array_flip($arrTmpOrder));
 
         // Move the matching elements to their position in $arrOrder
         foreach ($arrValues as $k => $v) {
@@ -124,7 +126,7 @@ abstract class AssetGenerator extends \Controller
     protected function isProductiveModeEnabled()
     {
         // TODO: use Config::get(..);
-        $symfonyMode = !in_array(System::getContainer()->get('kernel')->getEnvironment(), array('test', 'dev'));
+        $symfonyMode = !in_array(System::getContainer()->get('kernel')->getEnvironment(), ['test', 'dev']);
         $superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
             ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
             : false;
