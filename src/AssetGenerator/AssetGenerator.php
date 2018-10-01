@@ -77,26 +77,29 @@ abstract class AssetGenerator extends \Controller
 		return $compressor->minify($filePath);
     }
 
-    protected function sortArrayValues($arrValues, $arrTmpOrder)
+    protected function sortArrayValues(array $arrValues, array $arrTmpOrder)
     {
-        if (!empty($arrTmpOrder) && is_array($arrTmpOrder)) {
+        // No order given
+        if (empty($arrTmpOrder)) {
 
-            $arrOrder = array_map(function(){}, array_flip($arrTmpOrder));
-
-            // Move the matching elements to their position in $arrOrder
-            foreach ($arrValues as $k => $v) {
-                $arrOrder[$v] = $v;
-                unset($arrValues[$k]);
-            }
-
-            // Append the left-over style sheets at the end
-            if (!empty($arrVales)) {
-                $arrOrder = array_merge($arrOrder, array_values($arrVales));
-            }
-
-            // Remove empty entries
-            $arrValues = array_filter($arrOrder);
+            return $arrValues;
         }
+
+        $arrOrder = array_map(function(){}, array_flip($arrTmpOrder));
+
+        // Move the matching elements to their position in $arrOrder
+        foreach ($arrValues as $k => $v) {
+            $arrOrder[$v] = $v;
+            unset($arrValues[$k]);
+        }
+
+        // Append the left-over style sheets at the end
+        if (!empty($arrValues)) {
+            $arrOrder = array_merge($arrOrder, array_values($arrValues));
+        }
+
+        // Remove empty entries
+        $arrValues = array_filter($arrOrder);
 
         return array_values($arrValues);
     }

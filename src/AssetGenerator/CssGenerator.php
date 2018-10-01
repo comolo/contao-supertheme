@@ -23,8 +23,8 @@ class CssGenerator extends AssetGenerator
     protected function filesCollector()
     {
         return $this->sortArrayValues(
-            unserialize($this->layoutModel->external_scss),
-            unserialize($this->layoutModel->external_scss_order)
+            (array) unserialize($this->layoutModel->external_scss),
+            (array) unserialize($this->layoutModel->external_scss_order)
         );
     }
 

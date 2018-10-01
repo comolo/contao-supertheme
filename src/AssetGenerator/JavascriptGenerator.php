@@ -21,13 +21,13 @@ class JavascriptGenerator extends AssetGenerator
     protected function filesCollector()
     {
         $arrLayoutFiles = $this->sortArrayValues(
-            unserialize($this->layoutModel->external_js),
-            unserialize($this->layoutModel->external_js_order)
+            (array) unserialize($this->layoutModel->external_js),
+            (array) unserialize($this->layoutModel->external_js_order)
         );
 
         $arrPageFiles = $this->sortArrayValues(
-            unserialize($this->pageModel->external_js),
-            unserialize($this->pageModel->external_js_order)
+            (array) unserialize($this->pageModel->external_js),
+            (array) unserialize($this->pageModel->external_js_order)
         );
 
         return array_merge($arrLayoutFiles, $arrPageFiles);
