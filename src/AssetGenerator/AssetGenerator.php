@@ -12,6 +12,7 @@
 namespace Comolo\SuperThemeBundle\AssetGenerator;
 
 use Contao\Combiner;
+use Contao\Config;
 use Contao\FilesModel;
 use Contao\System;
 
@@ -90,10 +91,7 @@ abstract class AssetGenerator extends \Controller
      */
     protected function isMinifyEnabled()
     {
-        // TODO: use Config::get(..);
-        return isset($GLOBALS['TL_CONFIG']['superthemeMinify'])
-            ? $GLOBALS['TL_CONFIG']['superthemeMinify']
-            : false;
+        return Config::get('superthemeMinify');
     }
 
     protected function sortArrayValues(array $arrValues, array $arrTmpOrder)
@@ -131,11 +129,8 @@ abstract class AssetGenerator extends \Controller
      */
     protected function isProductiveModeEnabled()
     {
-        // TODO: use Config::get(..);
         $symfonyMode = !in_array(System::getContainer()->get('kernel')->getEnvironment(), ['test', 'dev']);
-        $superThemeMode = isset($GLOBALS['TL_CONFIG']['superthemeProductiveMode'])
-            ? $GLOBALS['TL_CONFIG']['superthemeProductiveMode']
-            : false;
+        $superThemeMode = Config::get('superthemeProductiveMode');
 
         return ($symfonyMode && $superThemeMode);
     }
