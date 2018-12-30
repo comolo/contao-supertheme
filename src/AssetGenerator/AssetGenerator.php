@@ -11,8 +11,9 @@
 
 namespace Comolo\SuperThemeBundle\AssetGenerator;
 
+use Contao\Combiner;
 use Contao\FilesModel;
-use \Contao\System;
+use Contao\System;
 
 /**
  * Class AssetGenerator
@@ -26,17 +27,22 @@ abstract class AssetGenerator extends \Controller
 
     public function generate(\PageModel $page, \LayoutModel $layout, \PageRegular $pageRegular)
     {
+        if (TL_MODE == 'BE')
+        {
+            return;
+        }
+
         $this->pageModel = $page;
         $this->layoutModel = $layout;
         $this->pageRegular = $pageRegular;
         $arrFileIds = $this->filesCollector();
 
         if (count($arrFileIds) > 0) {
-            $arrFiles = \FilesModel::findMultipleByUuids($arrFileIds);
+            $arrFiles = FilesModel::findMultipleByUuids($arrFileIds);
 
             if (is_object($arrFiles) && $arrFiles->count() > 0) {
                 $arrFilePaths = $arrFiles->fetchEach('path');
-                $combiner = new \Combiner();
+                $combiner = new Combiner();
 
                 foreach (array_unique($arrFilePaths) as $fileId => $filePath) {
                     // compile & combine
