@@ -171,7 +171,11 @@ class CssGenerator extends AssetGenerator
     }
 
     protected function addAssetToPage(string $filePath)
-    {
+    {   
+        // Remove slash in app_dev.php to fix path
+        if (substr( $filePath, 0, 1 ) === '/') {
+            $filePath = substr($filePath, 1);              
+        }
         $GLOBALS['TL_HEAD'][] = '<link rel="stylesheet" href="' . $filePath . '">';
     }
 }
