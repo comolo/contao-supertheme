@@ -17,8 +17,8 @@
     }
   ],
   "require": {
-    "php": "^7.1",
-    "contao/core-bundle": "^4.4",
+    "php": "^8.0",
+    "contao/core-bundle": "^4.12",
     "leafo/scssphp": "~0.6",
     "comolo/php-scssphp-compass": "~0.1",
     "coffeescript/coffeescript": "~1.3",
